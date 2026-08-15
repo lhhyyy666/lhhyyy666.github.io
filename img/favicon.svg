@@ -6,5 +6,6 @@
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="14" fill="url(#bg)"/>
-  <text x="32" y="44" font-size="36" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-weight="bold" fill="#ffffff" text-anchor="middle">梵</text>
+  <!-- 空心五角星 -->
+  <path d="M32 11 L36.9 26.2 L52.9 26.2 L40 35.6 L44.9 50.8 L32 41.4 L19.1 50.8 L24 35.6 L11.1 26.2 L27.1 26.2 Z" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linejoin="round"/>
 </svg>
