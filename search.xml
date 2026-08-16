@@ -1,6 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ABC458</title>
+    <url>/2026/05/16/ABC458/</url>
+    <content><![CDATA[<p>今天写到E题，来写个小小题解吧！</p>
+<h1 id="A">A</h1>
+<h3 id="题意">题意</h3>
+<p>给你一个字符串s，删除前面n个和后面n个字母，然后输出</p>
+<h3 id="思路">思路</h3>
+<p>使用substr进行截取</p>
+<h3 id="代码">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin&gt;&gt;s;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    s=s.<span class="built_in">substr</span>(n);</span><br><span class="line">    <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">    s=s.<span class="built_in">substr</span>(<span class="number">0</span>,len-n);</span><br><span class="line">    cout&lt;&lt;s&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="B">B</h1>
+<h3 id="题意-v2">题意</h3>
+<p>给你一个二维数组，问每一个单元格的相邻的单元格数</p>
+<h3 id="思路-v2">思路</h3>
+<p>超出范围的不算，我们可以假设都为4，然后如果有在边上的就剪掉</p>
+<h3 id="代码-v2">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="type">int</span> n,m;</span><br><span class="line">   cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=m;++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> f=<span class="number">4</span>;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">1</span>) f--;</span><br><span class="line">            <span class="keyword">if</span>(i==n) f--;</span><br><span class="line">            <span class="keyword">if</span>(j==<span class="number">1</span>) f--;</span><br><span class="line">            <span class="keyword">if</span>(j==m) f--;</span><br><span class="line">            cout&lt;&lt;f&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="C">C</h1>
+<h3 id="题意-v3">题意</h3>
+<p>给你一个字符串s，寻找奇数并且&quot;C&quot;在中间的子串个数（不同位置的子串不同）</p>
+<h3 id="思路-v3">思路</h3>
+<p>只要找到每一个位置的”C“，并且计算在每个位置的最长的子串长度的一半，全部加起来</p>
+<h3 id="代码-v3">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin&gt;&gt;s;</span><br><span class="line">    <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">    ll cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i]==<span class="string">&#x27;C&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cnt++;<span class="comment">//单独的&quot;C&quot;也是一个子串</span></span><br><span class="line">            cnt+=<span class="built_in">min</span>(i,len-i<span class="number">-1</span>);<span class="comment">//最长的长度取决于比较短的一边</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;cnt&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="D">D</h1>
+<h3 id="题意-v4">题意</h3>
+<p>给你一个x，然后进行q次加入ai和bi构成序列，并且查询序列的中位数</p>
+<h3 id="思路-v4">思路</h3>
+<p>刚开始以为是中间数，然后觉得怎么这么简单好奇怪，然后看了看样例
+噢!中位数啊，要排序的！！！
+然后想着排序？？于是想到优先队列（堆），但是呢这个是取中间的，不是求最大和最小啊
+那我用两个！一大一小。
+l是大根堆 用来存储所有数字中<strong>较小的那一半</strong>。 <code>l.top()</code>较小那一半之中的<strong>最大值</strong>。
+r是小根堆（通过使用存入负值）用来存储所有数字中<strong>较大的那一半</strong>。<code>r.top()</code> 取负数后代表较大那一半之中的<strong>最小值</strong>。
+因为每次循环都会同时插入两个数。加上初始的 1 个数，总数字个数序列永远是奇数。所以中位数是<code>l.top()</code></p>
+<h3 id="代码-v4">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">priority_queue&lt;<span class="type">int</span>&gt; l,r;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l.<span class="built_in">empty</span>()||x&lt;=l.<span class="built_in">top</span>())</span><br><span class="line">    &#123;</span><br><span class="line">	    <span class="comment">// 比左边最大值还小，说明属于较小的一半</span></span><br><span class="line">        l.<span class="built_in">push</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">	    <span class="comment">// 比左边最大值大，说明属于较大的一半（存负数变小根堆）</span></span><br><span class="line">        r.<span class="built_in">push</span>(-x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//调整两个堆的大小，左堆大小=右堆大小+1(保证l.top()是答案)</span></span><br><span class="line">    <span class="keyword">if</span>(l.<span class="built_in">size</span>()&gt;r.<span class="built_in">size</span>()<span class="number">+1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        r.<span class="built_in">push</span>(-l.<span class="built_in">top</span>());</span><br><span class="line">        l.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(r.<span class="built_in">size</span>()&gt;l.<span class="built_in">size</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        l.<span class="built_in">push</span>(-r.<span class="built_in">top</span>());</span><br><span class="line">        r.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    cin&gt;&gt;x;</span><br><span class="line">    <span class="built_in">insert</span>(x);</span><br><span class="line">    <span class="type">int</span> q;</span><br><span class="line">    cin&gt;&gt;q;</span><br><span class="line">    <span class="keyword">while</span>(q--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> a,b;</span><br><span class="line">        cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">        <span class="built_in">insert</span>(a);</span><br><span class="line">        <span class="built_in">insert</span>(b);</span><br><span class="line">        cout&lt;&lt;l.<span class="built_in">top</span>()&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="E">E</h1>
+<h3 id="题意-v5">题意</h3>
+<p>序列A满足有x1个1，x2个2，x3个3，并且 ∣ai+1​−ai​∣≤1 
+问这样的A的个数，答案模998244353</p>
+<h3 id="思路-v5">思路</h3>
+<p>第一反应动态规划，正准备想转移状态，看了一下x1,x2,x3的范围，1~1e6,好吧，动态规划pass~~
+重新开始看题目条件， ∣ai+1​−ai​∣≤1 ，那么我们推出 1和 3 绝对不能相邻，中间必须有2来隔开
+那么！我们可以将2看成隔板，将1和3插入其中
+将x2个 2 划分出的 x2+1 个空隙，<strong>每一个空隙要么全放 1（且至少放一个），要么全放 3（且至少放一个），要么都不放</strong>。
+假设一共选了 i 个空隙来放 1，选了 j 个空隙来放 3。</p>
+<ol>
+<li><strong>选择空隙的位置</strong>：
+从 x2+1个空隙中选出 i 个放 $1$，再从剩下的空隙中选出j个放 $3$,方案数为：
+$\binom{x2+1}{i} \cdot \binom{x2+1-i}{j}$</li>
+<li><strong>分配元素的数量</strong>：</li>
+</ol>
+<ul>
+<li>将 $x1$ 个相同的 $1$ 放入 $i$ 个<strong>非空</strong>的空隙中，方案数为：$\binom{x1-1}{i-1}$</li>
+<li>将 $x3$ 个相同的 $3$ 放入 $j$ 个<strong>非空</strong>的空隙中，方案数为：$\binom{x3-1}{j-1}$
+所以，对于i和 j，合法的排列数为：</li>
+</ul>
+<p>$$f(i, j) = \binom{x2+1}{i} \binom{x2+1-i}{j} \binom{x1-1}{i-1} \binom{x3-1}{j-1}$$</p>
+<p>然后我们对每一个i和j进行计算，但是这样时间就是1e12，oh no!TLE!
+我们要在进行优化
+当 $i$ 固定时，我们需要对 $j$ 进行求和：</p>
+<p>$$\sum_{j=1}^{x3} \binom{x2+1}{i} \binom{x2+1-i}{j} \binom{x1-1}{i-1} \binom{x3-1}{j-1}$$</p>
+<p>将与 $j$ 无关的项提出来：</p>
+<p>$$\binom{x2+1}{i} \binom{x1-1}{i-1} \sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{j-1}$$</p>
+<p>利用恒等式 $\binom{x3-1}{j-1} = \binom{x3-1}{x3-j}$，后面的求和项变为：</p>
+<p>$$\sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{x3-j}$$</p>
+<p>根据范德蒙德恒等式，这个求和等于从两堆物品（一堆 x2+1-i 个，另一堆 x3-1个）中一共选出 j + (x3-j) = x3 个物品的方案数
+即：</p>
+<p>$$\sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{x3-j} = \binom{x2+x3-i}{x3}$$</p>
+<p>然后我们惊奇的发现 j 没掉了！
+注意：i的个数不能大于x1,也不能大于可用的空隙x2+1
+那么我们可以推出总方案数可以表示为：
+$$ans = \sum_{i=1}^{\min(x1, x2+1)} \binom{x2+1}{i} \binom{x1-1}{i-1} \binom{x2+x3-i}{x3} \pmod{998244353}$$
+代码上面
+我们需要求组合数C，我们对阶乘 fact[]和逆元阶乘 invfact[]进行预处理
+运用费马小定理和快速幂来求出最后一个invfact[N-1],然后倒推剩下的invfact[]</p>
+<h3 id="代码-v5">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">3e6</span><span class="number">+5</span>,mod=<span class="number">998244353</span>;</span><br><span class="line">ll fact[N],invfact[N];</span><br><span class="line"><span class="comment">//快速幂</span></span><br><span class="line"><span class="function">ll <span class="title">pw</span><span class="params">(ll a,ll b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ll res=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>)</span><br><span class="line">            res=(res*a)%mod;</span><br><span class="line">        a=(a*a)%mod;</span><br><span class="line">        b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pre</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fact[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    invfact[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;N;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        fact[i]=(fact[i<span class="number">-1</span>]*i)%mod;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//费马小定理</span></span><br><span class="line">    invfact[N<span class="number">-1</span>]=<span class="built_in">pw</span>(fact[N<span class="number">-1</span>],mod<span class="number">-2</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=N<span class="number">-2</span>;i&gt;=<span class="number">1</span>;--i)</span><br><span class="line">    &#123;</span><br><span class="line">        invfact[i]=(invfact[i<span class="number">+1</span>]*(i<span class="number">+1</span>))%mod;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">C</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(k&lt;<span class="number">0</span>||k&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> fact[n]*invfact[k]%mod*invfact[n-k]%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">pre</span>();</span><br><span class="line">    <span class="type">int</span> x1,x2,x3;</span><br><span class="line">    cin&gt;&gt;x1&gt;&gt;x2&gt;&gt;x3;</span><br><span class="line">    ll ans=<span class="number">0</span>;</span><br><span class="line">    <span class="comment">//i的个数不能大于x1,也不能大于可用的空隙x2+1</span></span><br><span class="line">    <span class="type">int</span> n=<span class="built_in">min</span>(x1,x2<span class="number">+1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        ll sum1=<span class="built_in">C</span>(x2<span class="number">+1</span>,i)%mod;</span><br><span class="line">        ll sum2=<span class="built_in">C</span>(x1<span class="number">-1</span>,i<span class="number">-1</span>)%mod;</span><br><span class="line">        ll sum3=<span class="built_in">C</span>(x3+x2-i,x3)%mod;</span><br><span class="line">        ll now=((sum1*sum2)%mod*sum3)%mod;</span><br><span class="line">        ans=(ans+now)%mod;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ABC459</title>
+    <url>/2026/05/23/ABC459/</url>
+    <content><![CDATA[<p>今天只写到D题，但是我还是来写题解了~
+A和B感觉没什么好写的，略了。</p>
+<h1 id="C">C</h1>
+<h2 id="题意">题意</h2>
+<p>给你N个格子，进行Q次操作
+1.在第x个格子里面加1，如果每个格子都大于1，每个格子都需要减去1
+2.查询有几个格子大于x</p>
+<h2 id="思路">思路</h2>
+<p>刚开始想着直接暴力，但是一看范围，嗯100%超时
+每次所有格子大于1的时候都减掉1，如果暴力遍历所有格子好麻烦，那么！我们干脆不要减了，<strong>记录下需要减的次数cnt</strong>
+在查询x的时候，因为我们没有给每个格子减cnt，所以我们需要给x<strong>加上tar</strong>是我们最后得出需要查询的值$tar=cnt+x$
+解决了减掉1的麻烦，还有什么麻烦呢？有没有感觉查询大于tar如果每次都遍历一次好麻烦，那么！如何快速的找到几个格子大于tar呢？我们直接开一个<em><strong>数组<code>S[i]</code>来记录累计次数&gt;=i 的单元格数量</strong>，现在我们查询只要输出<code>S[tar]</code>即可
+好了，问题又来了，我们如何看是否需要<code>cnt++</code>(所有格子减1)，其实思考完上面，这个解决非常简单，只有当</em><em>所有单元格的次数都大于cnt</em>*的时候，我们才要减掉1，我们已经记录了次数数组S，所以只要$S[cnt+1]==n$ 我们就需要<code>cnt++</code></p>
+<h2 id="代码">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,q;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;q;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n<span class="number">+1</span>,<span class="number">0</span>)</span></span>;      </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">S</span><span class="params">(q<span class="number">+5</span>,<span class="number">0</span>)</span></span>;    </span><br><span class="line">    S[<span class="number">0</span>]=n;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> qq=q;</span><br><span class="line">    <span class="keyword">while</span>(q--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> op,x;</span><br><span class="line">        cin&gt;&gt;op&gt;&gt;x;</span><br><span class="line">        <span class="keyword">if</span> (op==<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> c=a[x];</span><br><span class="line">            S[c<span class="number">+1</span>]++;</span><br><span class="line">            a[x]++;</span><br><span class="line">            <span class="keyword">if</span> (S[cnt<span class="number">+1</span>]==n)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (op==<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> tar=cnt+x;</span><br><span class="line">            <span class="comment">// 如果目标要求的累计次数超过了最大操作数q，直接输出0</span></span><br><span class="line">            <span class="keyword">if</span>(tar&gt;qq)</span><br><span class="line">            &#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;0\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                cout&lt;&lt;S[tar]&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="D">D</h1>
+<h2 id="题意-v2">题意</h2>
+<p>给你字符串S，问能不能重新排列 S ，让相邻的两个字符都不相同</p>
+<h2 id="思路-v2">思路</h2>
+<p>找到S中出现最多的字母的个数maxc，l是S的长度，如果最多的字母的个数大于长度的一半+1即$maxc&gt;(l+1)/2$，那么肯定不可以，直接输出No
+如果可以，还需要输出排序后的S
+那么现在我们需要构造S，其实只要交替的放字母就好了，这里我使用了优先队列（堆）来实现</p>
+<h2 id="代码-v2">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">while</span>(n--)</span><br><span class="line">    &#123;</span><br><span class="line">        string s;</span><br><span class="line">        cin&gt;&gt;s;</span><br><span class="line">        map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; mp;</span><br><span class="line">        <span class="type">int</span> l=s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> maxc=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;l;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            mp[s[i]]++;</span><br><span class="line">            <span class="keyword">if</span>(mp[s[i]]&gt;maxc)</span><br><span class="line">            &#123;</span><br><span class="line">                maxc=mp[s[i]];</span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(maxc&lt;=(l<span class="number">+1</span>)/<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">            priority_queue&lt;pair&lt;<span class="type">int</span>, <span class="type">char</span>&gt; &gt; pq;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(mp[i+<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                    pq.<span class="built_in">push</span>(&#123;mp[i+<span class="string">&#x27;a&#x27;</span>],i+<span class="string">&#x27;a&#x27;</span>&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            string ans=<span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="function">pair&lt;<span class="type">int</span>,<span class="type">char</span>&gt; <span class="title">pre</span><span class="params">(<span class="number">-1</span>,<span class="string">&#x27; &#x27;</span>)</span></span>;</span><br><span class="line">            <span class="keyword">while</span>(!pq.<span class="built_in">empty</span>())</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">auto</span> now=pq.<span class="built_in">top</span>();</span><br><span class="line">                pq.<span class="built_in">pop</span>();</span><br><span class="line">                ans+=now.second;</span><br><span class="line">                now.first--;</span><br><span class="line">                <span class="keyword">if</span>(pre.first&gt;<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    pq.<span class="built_in">push</span>(pre);</span><br><span class="line">                &#125;</span><br><span class="line">                pre=now;</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;ans&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>19岁随笔</title>
+    <url>/2026/06/03/19/</url>
+    <content><![CDATA[<p>不知不觉19啦~~ 记录一下吧</p>
+<p>时光倏忽而过，恍惚刚吹完十八岁的生日蜡烛，转眼便站在了十九岁的路口。</p>
+<p>回望这一年，你成长了好多好多，从前的你会因为一次考试没有考好而崩溃落泪，会因为一些小事情反复陷入精神内耗，会因为别人的看法而伤心，现在呢，慢慢的你好像强大了起来，不会因为一点点小事就埋头痛哭，遇到事情不在依靠别人，而是自己慢慢尝试解决，解决了自己很多以前感觉不可能的事情，抗压能力真的强了好多好多。但是呢，其实你还是会因为未来而焦虑，还是会因为自己的选择而苦恼，你不知道自己的选择是不是正确的，只能在心里默默承受，纠结当下的选择对错，一遍遍劝慰自己：当下就是最好的。</p>
+<p>这一年在忙碌充实又焦虑迷茫交织中度过，认识了好多朋友，遇到了很好很好的室友和朋友，收获了好多。这一年经历了高考，踏入崭新的大学校园，感觉整个人都不一样了。还去了好多好多地方玩，暑假和ysh去景德镇，买了好多好多东西。和家人去了马来西亚，第一次出国玩，很新奇的体验吧。寒假去了和cjj去了南昌，南昌拌粉还有瓦罐汤真的真的好好吃，也很好玩。去比赛浙江省省赛（虽然打铁了，但也是一次很好经历），在杭州和xxy见面吃饭。五一和大学朋友们以前去了南京，南京人挤人，但是也很好玩。不知不觉去了好多地方玩啊，都说少年游历的风光自有独一份的热烈，和以后长大了去玩会有不同的感觉，等我10年后有时间还有在去一次嘿嘿</p>
+<p>我有好多好多话想和你说，又好像没有什么好说的，千言万语堵在心口，落笔又不知从何说起，明年就是2开头了，好好享受最后一年1开头的时光吧！不知道以后的生活是如何的，有时候你总是幻想自己有钱了如何如何，有时候又想着只要健健康康平平淡淡的生活就好，未来的不确定性，ai的冲击力，源源不断的焦虑裹挟着你，我想等到10年后的现在，我一定要看看这封写给自己的信，我想10年后的我一定会给你解答的，你现在过的如何，是你想象的样子吗，你后来有没有为现在选择竞赛而后悔，你现在边上的人还是他吗，你和朋友们还有联系吗，你看到这个自己之前写的东西有没有哭啊，是不是很感慨啊。</p>
+<p>希望以后的我看到是开心的，感动的，而不是伤心和后悔的，希望无论发生什么，你都可以坚持坚持，不要害怕，勇敢一点坚强一点，就像歌里唱的：&quot;我学着不去担心得太远 不计划太多反而能勇敢冒险~&quot;，无论你以后做出什么选择，我（19岁版）都会支持你的，因为我始终相信你，也相信我自己。</p>
+<p>回头看这一路，有熬夜刷题备战的疲惫，也有取得小小成果的满心欢喜，有刚踏入大学陌生的局促，也有慢慢适应集体、被朋友温柔包容的无数瞬间。偶尔躺在床上胡思乱想，纠结前路方向，羡慕别人的步调顺遂，却忘了每个人都有自己的成长时区，不要用自己的短处和别人的长处相比较，你已经在跌跌撞撞里一步一步往前走了。不必苛责自己事事圆满，每一次经历都是收获，偶尔摆烂偷懒、短暂陷入颓废也没关系，松弛过后重新整装出发就好。十几岁最珍贵的，就是拥有试错的底气，不要因为一次失误就全盘否定自己。珍惜身边的朋友，细碎的聚餐、漫无目的的散步、随口的闲聊，都是往后很难复刻的少年时光。</p>
+<p>剩下的十九岁日子，多去吹风、多看落日、多奔赴热爱，少困在无端内耗里。不需要急于敲定未来的答案，人生本就是边走边修正方向。记住此刻满腔热忱的自己吧，怀揣这份赤诚往前走。十年回望，愿你不负当下，不负十九岁满怀期许的我。愿山野长路、烟火远行仍在继续，保持热烈与赤诚，自在生长，永远拥有奔赴远方的勇气。</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ABC457</title>
     <url>/2026/05/12/ABC457/</url>
     <content><![CDATA[<p>比赛时写到D题，比赛后补完了，记录一下第一次补完，以及第一次写题解</p>
@@ -99,323 +241,8 @@ f[i][j]+=f[i+1][j]   (对应2)
         <category>题解</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>19岁随笔</title>
-    <url>/2026/06/03/19/</url>
-    <content><![CDATA[<p>不知不觉19啦~~ 记录一下吧</p>
-<p>时光倏忽而过，恍惚刚吹完十八岁的生日蜡烛，转眼便站在了十九岁的路口。</p>
-<p>回望这一年，你成长了好多好多，从前的你会因为一次考试没有考好而崩溃落泪，会因为一些小事情反复陷入精神内耗，会因为别人的看法而伤心，现在呢，慢慢的你好像强大了起来，不会因为一点点小事就埋头痛哭，遇到事情不在依靠别人，而是自己慢慢尝试解决，解决了自己很多以前感觉不可能的事情，抗压能力真的强了好多好多。但是呢，其实你还是会因为未来而焦虑，还是会因为自己的选择而苦恼，你不知道自己的选择是不是正确的，只能在心里默默承受，纠结当下的选择对错，一遍遍劝慰自己：当下就是最好的。</p>
-<p>这一年在忙碌充实又焦虑迷茫交织中度过，认识了好多朋友，遇到了很好很好的室友和朋友，收获了好多。这一年经历了高考，踏入崭新的大学校园，感觉整个人都不一样了。还去了好多好多地方玩，暑假和ysh去景德镇，买了好多好多东西。和家人去了马来西亚，第一次出国玩，很新奇的体验吧。寒假去了和cjj去了南昌，南昌拌粉还有瓦罐汤真的真的好好吃，也很好玩。去比赛浙江省省赛（虽然打铁了，但也是一次很好经历），在杭州和xxy见面吃饭。五一和大学朋友们以前去了南京，南京人挤人，但是也很好玩。不知不觉去了好多地方玩啊，都说少年游历的风光自有独一份的热烈，和以后长大了去玩会有不同的感觉，等我10年后有时间还有在去一次嘿嘿</p>
-<p>我有好多好多话想和你说，又好像没有什么好说的，千言万语堵在心口，落笔又不知从何说起，明年就是2开头了，好好享受最后一年1开头的时光吧！不知道以后的生活是如何的，有时候你总是幻想自己有钱了如何如何，有时候又想着只要健健康康平平淡淡的生活就好，未来的不确定性，ai的冲击力，源源不断的焦虑裹挟着你，我想等到10年后的现在，我一定要看看这封写给自己的信，我想10年后的我一定会给你解答的，你现在过的如何，是你想象的样子吗，你后来有没有为现在选择竞赛而后悔，你现在边上的人还是他吗，你和朋友们还有联系吗，你看到这个自己之前写的东西有没有哭啊，是不是很感慨啊。</p>
-<p>希望以后的我看到是开心的，感动的，而不是伤心和后悔的，希望无论发生什么，你都可以坚持坚持，不要害怕，勇敢一点坚强一点，就像歌里唱的：&quot;我学着不去担心得太远 不计划太多反而能勇敢冒险~&quot;，无论你以后做出什么选择，我（19岁版）都会支持你的，因为我始终相信你，也相信我自己。</p>
-<p>回头看这一路，有熬夜刷题备战的疲惫，也有取得小小成果的满心欢喜，有刚踏入大学陌生的局促，也有慢慢适应集体、被朋友温柔包容的无数瞬间。偶尔躺在床上胡思乱想，纠结前路方向，羡慕别人的步调顺遂，却忘了每个人都有自己的成长时区，不要用自己的短处和别人的长处相比较，你已经在跌跌撞撞里一步一步往前走了。不必苛责自己事事圆满，每一次经历都是收获，偶尔摆烂偷懒、短暂陷入颓废也没关系，松弛过后重新整装出发就好。十几岁最珍贵的，就是拥有试错的底气，不要因为一次失误就全盘否定自己。珍惜身边的朋友，细碎的聚餐、漫无目的的散步、随口的闲聊，都是往后很难复刻的少年时光。</p>
-<p>剩下的十九岁日子，多去吹风、多看落日、多奔赴热爱，少困在无端内耗里。不需要急于敲定未来的答案，人生本就是边走边修正方向。记住此刻满腔热忱的自己吧，怀揣这份赤诚往前走。十年回望，愿你不负当下，不负十九岁满怀期许的我。愿山野长路、烟火远行仍在继续，保持热烈与赤诚，自在生长，永远拥有奔赴远方的勇气。</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>并查集题型</title>
-    <url>/2026/07/26/%E5%B9%B6%E6%9F%A5%E9%9B%86%E9%A2%98%E5%9E%8B/</url>
-    <content><![CDATA[<p>并查集解决的是这样一个标准问题：<strong>动态维护若干个不相交的集合，支持合并两个集合与查询两个元素是否属于同一集合</strong>。但在实际问题中，很少会直接给出“请合并集合”的题目。更多时候，我们需要先从题意中找到“连通关系”或“等价关系”，再判断题目究竟需要这种关系的什么信息。</p>
-<p>因此，并查集题型可以沿着两条主线展开：</p>
-<ul>
-<li><strong>怎样识别并查集模型</strong>：对象是什么，什么算“连通”或“属于同一集合”；</li>
-<li><strong>怎样询问</strong>：求连通块数量、集合大小、判断是否成环、带权关系推断，还是扩展域的分类问题。</li>
-</ul>
-<h2 id="一、怎样从原问题中找到并查集模型">一、怎样从原问题中找到并查集模型</h2>
-<h3 id="1-显式的连通性问题">1. 显式的连通性问题</h3>
-<p>问题直接描述“连通”、“相连”、“属于同一组”等概念，是最直接的并查集应用场景。</p>
-<h4 id="典型例题：P1551-亲戚">典型例题：<a href="https://www.luogu.com.cn/problem/P1551">P1551 亲戚</a></h4>
-<p>给定 n 个人、m 对亲戚关系，以及 p 个询问，每次询问两个人是否为亲戚。亲戚关系具有传递性。</p>
-<p><strong>解法思路</strong>：每个人初始是一个独立的集合。每读入一对亲戚关系，就将两人所在的集合合并。查询时只需判断两人是否在同一集合中。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">5000</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> f[maxn];</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> q;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m&gt;&gt;q;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i) f[i]=i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="type">int</span> fx=<span class="built_in">find</span>(x);</span><br><span class="line">		<span class="type">int</span> fy=<span class="built_in">find</span>(y);</span><br><span class="line">		<span class="keyword">if</span>(fx!=fy)</span><br><span class="line">		&#123;</span><br><span class="line">			f[fx]=fy;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;q;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">find</span>(x)==<span class="built_in">find</span>(y))cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">		<span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="2-关系具有传递性的问题">2. 关系具有传递性的问题</h3>
-<p>当题目中的关系满足“A 与 B 有关系，B 与 C 有关系 ⇒ A 与 C 也有关系”时，就可以用并查集来维护这种等价关系。</p>
-<h4 id="典型例题：P1955-程序自动分析">典型例题：<a href="https://www.luogu.com.cn/problem/P1955">P1955 程序自动分析</a></h4>
-<p>给定若干对变量之间的相等/不等约束，判断是否存在一组赋值使所有约束同时满足。</p>
-<p>数据规模较大，变量编号可达 10^9，需要<strong>离散化</strong>处理。</p>
-<p><strong>解法思路</strong>：将所有相等约束涉及的变量合并到同一集合，然后检查所有不等约束——如果两个变量已在同一集合中，则矛盾。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">2e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Disc</span>&#123;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123; v.<span class="built_in">push_back</span>(x); &#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">sort</span>(v.<span class="built_in">begin</span>(),v.<span class="built_in">end</span>());</span><br><span class="line">		v.<span class="built_in">erase</span>(<span class="built_in">unique</span>(v.<span class="built_in">begin</span>(),v.<span class="built_in">end</span>()),v.<span class="built_in">end</span>());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> v.<span class="built_in">size</span>(); &#125;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">get_idx</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">lower_bound</span>(v.<span class="built_in">begin</span>(),v.<span class="built_in">end</span>(),x)-v.<span class="built_in">begin</span>()<span class="number">+1</span>; &#125;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">get_val</span><span class="params">(<span class="type">int</span> idx)</span> </span>&#123; <span class="keyword">return</span> v[idx<span class="number">-1</span>]; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> f[maxn];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">	<span class="type">int</span> x,y,op;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(node a,node b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a.op&gt;b.op;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line">node a[maxn];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Disc disc;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> x,y,z;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y&gt;&gt;z;</span><br><span class="line">		a[i]=&#123;x,y,z&#125;;</span><br><span class="line">		disc.<span class="built_in">add</span>(x),disc.<span class="built_in">add</span>(y);</span><br><span class="line">	&#125;</span><br><span class="line">	disc.<span class="built_in">init</span>();</span><br><span class="line">	<span class="built_in">sort</span>(a,a+n,cmp);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;N;++i) f[i]=i;</span><br><span class="line">	<span class="type">int</span> ff=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">auto</span> [x,y,op]=a[i];</span><br><span class="line">		x=disc.<span class="built_in">get_idx</span>(x),y=disc.<span class="built_in">get_idx</span>(y);</span><br><span class="line">		<span class="type">int</span> fx=<span class="built_in">find</span>(x),fy=<span class="built_in">find</span>(y);</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(fx!=fy) f[fx]=fy;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(fx==fy) </span><br><span class="line">			&#123;</span><br><span class="line">				ff=<span class="number">0</span>;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ff) cout&lt;&lt;<span class="string">&quot;YES\n&quot;</span>;</span><br><span class="line">	<span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;NO\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这一类问题的核心是：<strong>关系的传递性 = 并查集的合并</strong>。</p>
-<hr>
-<h3 id="3-动态连通性问题（离线倒序）">3. 动态连通性问题（离线倒序）</h3>
-<p>并查集擅长处理<strong>动态添加边</strong>的问题，但当涉及<strong>删除/断开</strong>操作时，直接处理很困难。常用技巧是<strong>离线倒序</strong>——把删除看作反向的添加。</p>
-<h4 id="典型例题：P1197-JSOI2008-星球大战">典型例题：<a href="https://www.luogu.com.cn/problem/P1197">P1197 [JSOI2008] 星球大战</a></h4>
-<p>给定一张无向图，依次摧毁一些节点及其连边，求每次摧毁后连通块的数量。</p>
-<p><strong>解法思路</strong>：正着做是删边，并查集不支持这样的操作。因此<strong>离线读入所有操作，从最终状态开始倒序加边</strong>。先记录所有被摧毁的节点，建出最终剩下的图，然后<strong>倒序</strong>处理摧毁操作——每次“恢复”一个节点及其连边，用并查集合并。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">4e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; adj[maxn];</span><br><span class="line"><span class="type">int</span> fa[maxn],ans[maxn],a[maxn],vis[maxn];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(fa[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">return</span> fa[x]=<span class="built_in">find</span>(fa[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i) fa[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> u,v;</span><br><span class="line">        cin&gt;&gt;u&gt;&gt;v;</span><br><span class="line">        adj[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">        adj[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    cin&gt;&gt;k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;k;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a[i];</span><br><span class="line">        vis[a[i]]=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> cnt=n-k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> u=<span class="number">0</span>;u&lt;n;++u)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[u]) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> v:adj[u])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(vis[v]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="type">int</span> ru=<span class="built_in">find</span>(u),rv=<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(ru!=rv)</span><br><span class="line">            &#123;</span><br><span class="line">                fa[rv]=ru;</span><br><span class="line">                cnt--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=k<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)</span><br><span class="line">    &#123;</span><br><span class="line">        ans[i]=cnt;cnt++;vis[a[i]]=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> u=a[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> v:adj[u])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(vis[v]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="type">int</span> ru=<span class="built_in">find</span>(u),rv=<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(ru!=rv)</span><br><span class="line">            &#123;</span><br><span class="line">                fa[rv]=ru;</span><br><span class="line">                cnt--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;cnt&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;k;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;ans[i]&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="典型例题：9619-米秋的贴吧吃瓜">典型例题：<a href="https://www.tzcoder.cn/acmhome/problemdetail.do?method=showdetail&amp;id=9619">9619: 米秋的贴吧吃瓜</a></h4>
-<blockquote>
-<p>初始有 N 个同学，M 对直接朋友关系（朋友关系具有传递性，即构成无向图）。接下来 Q 个操作按时间顺序出现：</p>
-<ul>
-<li>
-<p><code>1 U V</code>：U 和 V 绝交（删除这条直接边）；</p>
-</li>
-<li>
-<p><code>2 U V</code>：查询 U 和 V 当前是否还在同一个交际圈（即是否连通）。</p>
-</li>
-</ul>
-<p>数据范围：所有测试用例的 N, M, Q 总和分别 ≤ 1.5 × 10⁵。保证初始无重边自环，每对朋友最多绝交一次。</p>
-</blockquote>
-<p><strong>解法思路</strong>：</p>
-<p>并查集天生支持加边（合并），不支持删边。面对“边被逐步删除”的场景，常用技巧是 <strong>离线倒序处理</strong>：</p>
-<ol>
-<li>
-<p><strong>记录所有绝交操作</strong>，把将来会被删除的初始边标记出来。</p>
-</li>
-<li>
-<p><strong>构建最终状态</strong>：只保留那些<strong>从未被绝交过</strong>的初始边，得到最后一刻的并查集。</p>
-</li>
-<li>
-<p><strong>从后往前回放操作</strong>：</p>
-<ul>
-<li>
-<p>遇到查询 <code>2 U V</code>：直接用当前并查集回答，存储答案。</p>
-</li>
-<li>
-<p>遇到绝交 <code>1 U V</code>：<strong>恢复这条边</strong>（因为倒序看，这条边是在这个时刻被删除的，往前它就是存在的），执行 <code>unite(U, V)</code>。</p>
-</li>
-</ul>
-</li>
-</ol>
-<p>最后把存储的答案正序输出即可。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">1e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> fa[maxn];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(fa[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> fa[x]=<span class="built_in">find</span>(fa[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Edge</span>&#123;</span><br><span class="line">	<span class="type">int</span> op,u,v;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> n,m,q;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">	<span class="type">int</span> u,v;</span><br><span class="line">&#125;;</span><br><span class="line">node adj[maxn];</span><br><span class="line">Edge a[maxn];</span><br><span class="line"><span class="type">int</span> ans[maxn];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m&gt;&gt;q;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=n;++i) fa[i]=i;</span><br><span class="line">	map&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;,<span class="type">int</span> &gt; mp;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> u,v;</span><br><span class="line">		cin&gt;&gt;u&gt;&gt;v;</span><br><span class="line">		adj[i]=&#123;u,v&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;q;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> op,u,v;</span><br><span class="line">		cin&gt;&gt;op&gt;&gt;u&gt;&gt;v;</span><br><span class="line">		<span class="keyword">if</span>(u&gt;v) <span class="built_in">swap</span>(u,v);</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="number">1</span>) mp[&#123;u,v&#125;]=<span class="number">1</span>;</span><br><span class="line">		a[i]=&#123;op,u,v&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> u=adj[i].u,v=adj[i].v;</span><br><span class="line">		<span class="keyword">if</span>(mp[&#123;u,v&#125;]) <span class="keyword">continue</span>;</span><br><span class="line">		<span class="type">int</span> ru=<span class="built_in">find</span>(u);<span class="type">int</span> rv=<span class="built_in">find</span>(v);</span><br><span class="line">		<span class="keyword">if</span>(ru!=rv) </span><br><span class="line">		&#123;</span><br><span class="line">			fa[ru]=rv;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=q<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> op=a[i].op,u=a[i].u,v=a[i].v;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> ru=<span class="built_in">find</span>(u);<span class="type">int</span> rv=<span class="built_in">find</span>(v);</span><br><span class="line">			<span class="keyword">if</span>(ru!=rv) </span><br><span class="line">			&#123;</span><br><span class="line">				ans[i]=<span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> ans[i]=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(op==<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> ru=<span class="built_in">find</span>(u);<span class="type">int</span> rv=<span class="built_in">find</span>(v);</span><br><span class="line">			<span class="keyword">if</span>(ru!=rv) </span><br><span class="line">			&#123;</span><br><span class="line">				fa[ru]=rv;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;q;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> op=a[i].op;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(ans[i]) cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">			<span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="典型例题：ABC447-E-Divide-Graph">典型例题：<a href="https://atcoder.jp/contests/abc447/tasks/abc447_e">ABC447 E - Divide Graph</a></h4>
-<p>给定一个包含 <code>n</code> 个点、<code>m</code> 条边的带权无向图，第 <code>i</code> 条边的权值为 <code>2^i</code>（<code>i</code> 从 1 开始）。你需要删掉一些边，使得图<strong>不连通</strong>，求<strong>删掉的边权值和最小</strong>是多少。</p>
-<p>数据规模：<code>1 &lt;= n &lt;= 2e5</code>，<code>1 &lt;= m &lt;= 2e5</code></p>
-<p><strong>解法思路</strong>：</p>
-<p>删边最小化，等价于<strong>保留边最大化</strong>——在保证图不连通的前提下，尽可能保留权值大的边。</p>
-<p>由于第 <code>i</code> 条边的权值是 <code>2^i</code>，它<strong>严格大于</strong>前面所有边的权值之和（<code>2^1 + 2^2 + ... + 2^{i-1} &lt; 2^i</code>）。这个性质使得贪心策略成立：</p>
-<ul>
-<li>从权值<strong>从大到小</strong>（即从第 <code>m</code> 条边到第 <code>1</code> 条边）依次考虑每条边；</li>
-<li>如果加入这条边<strong>不会让图变得连通</strong>（即当前连通块数量 &gt; 2），就<strong>保留</strong>它；</li>
-<li>如果加入这条边会让图连通（即当前连通块数量 == 2 且这条边连接了两个不同的连通块），则<strong>不能保留</strong>，计入删掉的边权和。</li>
-</ul>
-<p>用<strong>并查集</strong>维护当前图的连通性，<code>cnt</code> 记录当前连通块数量。初始时 <code>cnt = n</code>。从大到小遍历所有边：</p>
-<ul>
-<li>若两个端点已在同一集合：这条边保留与否不影响连通性，可以直接<strong>保留</strong>（不计入答案）；</li>
-<li>若两个端点在不同集合：
-<ul>
-<li>若 <code>cnt &gt; 2</code>：合并两个集合，<code>cnt--</code>，<strong>保留</strong>这条边；</li>
-<li>若 <code>cnt == 2</code>：此时若合并，图就变成 1 个连通块（即连通了），所以这条边<strong>必须删掉</strong>，将 <code>2^i</code> 加入答案。</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">2e5</span><span class="number">+5</span>,mod=<span class="number">998244353</span>;</span><br><span class="line"><span class="type">int</span> f[maxn],v[maxn],u[maxn],cost[maxn];</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) f[i]=i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">     &#123;</span><br><span class="line">	    cin&gt;&gt;u[i]&gt;&gt;v[i];</span><br><span class="line">        cost[i]=(<span class="number">1</span>&lt;&lt;i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> cnt=n,ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=m;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">    &#123;</span><br><span class="line">	    rv=<span class="built_in">find</span>(v[i]),ru=<span class="built_in">find</span>(u[i]);</span><br><span class="line">        <span class="keyword">if</span>(rv!=ru)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(cnt&gt;<span class="number">2</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt--;</span><br><span class="line">                f[rv]=ru;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> ans=(ans+cost[i])%mod;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>本题的关键在于两点：</p>
-<ol>
-<li><strong>反向思维</strong>：删边最小化 → 保留边最大化；</li>
-<li><strong>特殊边权</strong>：<code>2^i</code> 的幂次性质保证了贪心策略的正确性——优先保留大边。</li>
-</ol>
-<p>这与前面两题的离线倒序思路有相似之处，但本题的“倒序”体现在<strong>按边权从大到小处理</strong>，而非按时间顺序倒序。</p>
-<p>这道题的核心是<strong>贪心 + 并查集维护连通性</strong>，属于并查集题型中的 <strong>“动态连通性 + 贪心选择”</strong> 类别。</p>
-<hr>
-<h3 id="4-通过“反集”处理矛盾关系（扩展域并查集）">4. 通过“反集”处理矛盾关系（扩展域并查集）</h3>
-<p>当关系不只是“同类”，还涉及“不同类”、“敌对”等二元对立关系时，可以用<strong>扩展域并查集</strong>（种类并查集）。</p>
-<h4 id="典型例题：P1892-BOI2003-团伙">典型例题：<a href="https://www.luogu.com.cn/problem/P1892">P1892 [BOI2003] 团伙</a></h4>
-<p>给定 n 个人和若干条“朋友”或“敌人”关系。朋友的朋友是朋友，敌人的敌人也是朋友。求最多有多少个团伙。</p>
-<p><strong>解法思路</strong>：将每个人拆成两个节点——<code>i</code> 表示本人，<code>i+n</code> 表示其敌人。</p>
-<ul>
-<li>朋友关系：合并 <code>i</code> 和 <code>j</code></li>
-<li>敌人关系：合并 <code>i</code> 与 <code>j+n</code>，合并 <code>i+n</code> 与 <code>j</code></li>
-</ul>
-<p>最终统计集合数量即为答案。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">1e3</span><span class="number">+2</span>;</span><br><span class="line"><span class="type">int</span> f[maxn*<span class="number">2</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,m;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">2</span>*n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		f[i]=i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">char</span> opt;</span><br><span class="line">		<span class="type">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;opt&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="keyword">if</span>(opt==<span class="string">&#x27;F&#x27;</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			f[<span class="built_in">find</span>(x)]=<span class="built_in">find</span>(y);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			f[<span class="built_in">find</span>(y+n)]=<span class="built_in">find</span>(x);</span><br><span class="line">			f[<span class="built_in">find</span>(x+n)]=<span class="built_in">find</span>(y);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(f[i]==i) cnt++;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;cnt&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>扩展域并查集的核心思想是<strong>拆点</strong>：一个元素拆成多个节点来表示不同的状态/角色。</p>
-<h2 id="二、怎样询问这条链（集合）">二、怎样询问这条链（集合）</h2>
-<h3 id="1-仅需判断连通性">1. 仅需判断连通性</h3>
-<p>最基本的询问：两个元素是否在同一集合中，或连通块的数量。</p>
-<h4 id="典型例题：P1536-村村通">典型例题：<a href="https://www.luogu.com.cn/problem/P1536">P1536 村村通</a></h4>
-<p>给定 n 个村庄和 m 条已建道路，求至少还需要修多少条路才能使所有村庄连通。</p>
-<p><strong>解法思路</strong>：用并查集统计当前连通块数量 <code>cnt</code>，需要修的道路数为 <code>cnt - 1</code>。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">2000005</span>;</span><br><span class="line"><span class="type">int</span> f[maxn];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x!=f[x]) f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">    <span class="keyword">return</span> f[x];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    <span class="keyword">while</span>(cin&gt;&gt;n,n)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i) f[i]=i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> x,y;</span><br><span class="line">            cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">            <span class="type">int</span> fx=<span class="built_in">find</span>(x);</span><br><span class="line">            <span class="type">int</span> fy=<span class="built_in">find</span>(y);</span><br><span class="line">            <span class="keyword">if</span>(fx!=fy) f[fx]=fy;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> ans=n<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(f[i]!=i) --ans;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-需要维护集合大小-其他信息">2. 需要维护集合大小/其他信息</h3>
-<p>除了连通性，有时还需要知道每个集合的大小等信息。</p>
-<h4 id="典型例题：P3958-NOIP2017-提高组-奶酪">典型例题：<a href="https://www.luogu.com.cn/problem/P3958">P3958 [NOIP2017 提高组] 奶酪</a></h4>
-<p>在一个三维空间中，有若干个半径相同的球形空洞。如果两个空洞相交或相切，则它们连通。判断是否存在一条从底部到顶部的通路。</p>
-<p><strong>解法思路</strong>：每个空洞是一个元素。若两个空洞相交/相切则合并。另外将底部和顶部也作为特殊节点，若空洞与底部/顶部相交则合并。最终判断底部和顶部是否在同一集合中。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">1e3</span><span class="number">+5</span>;</span><br><span class="line">ll n,h,r;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">    ll x,y,z;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dist</span><span class="params">(node a,node b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+(a.z-b.z)*(a.z-b.z)&lt;=<span class="number">4ll</span>*r*r;</span><br><span class="line">&#125;</span><br><span class="line">node a[maxn];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DSU</span> &#123;</span><br><span class="line"><span class="comment">/* ======================================== */</span></span><br><span class="line"><span class="type">int</span> fa[maxn], siz[maxn];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">( <span class="type">int</span> N )</span> </span>&#123; <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">0</span>; i &lt;= N; ++ i ) fa[i] = i, siz[i] = <span class="number">1</span>; &#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">( <span class="type">int</span> x )</span> </span>&#123; <span class="keyword">return</span> fa[x] == x ? x : fa[x] = <span class="built_in">find</span>( fa[x] ); &#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">merge</span><span class="params">( <span class="type">int</span> x, <span class="type">int</span> y )</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> rx = <span class="built_in">find</span>( x ), ry = <span class="built_in">find</span>( y );</span><br><span class="line">    <span class="keyword">if</span>( rx == ry ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>( siz[rx] &gt; siz[ry] ) <span class="built_in">swap</span>( rx, ry );</span><br><span class="line">    fa[rx] = ry, siz[ry] += siz[rx];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">same</span><span class="params">( <span class="type">int</span> x, <span class="type">int</span> y )</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">find</span>( x ) == <span class="built_in">find</span>( y ); &#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">size</span><span class="params">( <span class="type">int</span> x )</span> </span>&#123; <span class="keyword">return</span> siz[<span class="built_in">find</span>( x )]; &#125;</span><br><span class="line"><span class="comment">/* ======================================== */</span></span><br><span class="line">&#125; dsu;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;h&gt;&gt;r;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        ll x,y,z;</span><br><span class="line">        cin&gt;&gt;x&gt;&gt;y&gt;&gt;z;</span><br><span class="line">        a[i]=&#123;x,y,z&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    dsu.<span class="built_in">init</span>(n<span class="number">+1</span>);</span><br><span class="line">    <span class="type">int</span> flag0=<span class="number">0</span>,flagh=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(a[i].z+r&gt;=h) flagh=<span class="number">1</span>,dsu.<span class="built_in">merge</span>(i,n<span class="number">+1</span>);</span><br><span class="line">        <span class="keyword">if</span>(a[i].z-r&lt;=<span class="number">0</span>) flag0=<span class="number">1</span>,dsu.<span class="built_in">merge</span>(i,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!flag0 || !flagh) </span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=i<span class="number">+1</span>;j&lt;=n;++j)</span><br><span class="line">        &#123;</span><br><span class="line">            node x=a[i],y=a[j];</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">dist</span>(x,y)) </span><br><span class="line">            &#123;</span><br><span class="line">                dsu.<span class="built_in">merge</span>(i,j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dsu.<span class="built_in">same</span>(<span class="number">0</span>,n<span class="number">+1</span>))  cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="3-带权并查集：需要维护节点间的关系">3. 带权并查集：需要维护节点间的关系</h3>
-<p>当题目不仅询问“是否在同一集合”，还要求知道集合内元素之间的<strong>相对关系</strong>（如距离、差值、奇偶性等）时，需要使用<strong>带权并查集</strong>。</p>
-<h4 id="典型例题：P1196-NOI2002-银河英雄传说">典型例题：<a href="https://www.luogu.com.cn/problem/P1196">P1196 [NOI2002] 银河英雄传说</a></h4>
-<p>有 n 列战舰，支持两种操作：将某一列整体接到另一列末尾；查询两艘战舰在同一列中的距离。</p>
-<p><strong>解法思路</strong>：维护<strong>战舰 <code>x</code> 到其所在列队首（即根节点）的距离 <code>d[x]</code></strong>。合并时更新被合并列的根节点的 <code>d</code> 值。路径压缩时累加 <code>d</code> 值。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(x==fa[x]) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="type">int</span> root=<span class="built_in">find</span>(fa[x]);</span><br><span class="line">    d[x]+=d[fa[x]];  <span class="comment">// 累加距离</span></span><br><span class="line">    <span class="keyword">return</span> fa[x]=root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>完整代码</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">30000</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> fa[maxn],d[maxn],sz[maxn];</span><br><span class="line"><span class="comment">//d[x]表示x 到其所在列队根节点的距离</span></span><br><span class="line"><span class="comment">//sz[x]表示x的战舰总数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x==fa[x]) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="type">int</span> root=<span class="built_in">find</span>(fa[x]);</span><br><span class="line">    d[x]+=d[fa[x]];</span><br><span class="line">    <span class="keyword">return</span> fa[x]=root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">30000</span>;++i) fa[i]=i,d[i]=<span class="number">0</span>,sz[i]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(n--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> op;</span><br><span class="line">        <span class="type">int</span> x,y;</span><br><span class="line">        cin&gt;&gt;op&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        <span class="type">int</span> rx=<span class="built_in">find</span>(x),ry=<span class="built_in">find</span>(y);</span><br><span class="line">        <span class="keyword">if</span>(op==<span class="string">&#x27;M&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(rx!=ry)</span><br><span class="line">            &#123;</span><br><span class="line">                fa[rx]=ry;</span><br><span class="line">                d[rx]=sz[ry];</span><br><span class="line">                sz[ry]+=sz[rx];     </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(rx!=ry) cout&lt;&lt;<span class="string">&quot;-1\n&quot;</span>;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                cout&lt;&lt;<span class="built_in">abs</span>(d[x]-d[y])<span class="number">-1</span>&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>查询两艘战舰的距离：若在同一集合中，答案为 <code>abs(d[a] - d[b]) - 1</code>。</p>
-<h4 id="典型例题：P2024-NOI2001-食物链">典型例题：<a href="https://www.luogu.com.cn/problem/P2024">P2024 [NOI2001] 食物链</a></h4>
-<p>动物王国中有三类动物 A、B、C，构成环形食物链：<strong>A 吃 B，B 吃 C，C 吃 A</strong>。现有 N 个动物（编号 1~N），用 K 句话描述它们之间的关系：</p>
-<ul>
-<li>
-<p><code>1 X Y</code>：X 和 Y 是同类</p>
-</li>
-<li>
-<p><code>2 X Y</code>：X 吃 Y</p>
-</li>
-</ul>
-<p>一句话是<strong>假话</strong>当且仅当满足以下三条之一<a href="https://www.cnblogs.com/DarkValkyrie/p/10979331.html"></a><a href="https://blog.csdn.net/2201_75683257/article/details/141530324"></a>：</p>
-<ol>
-<li>
-<p>当前的话与前面某些真的话冲突</p>
-</li>
-<li>
-<p>当前话中 X 或 Y 比 N 大</p>
-</li>
-<li>
-<p>当前话表示 X 吃 X（即 <code>2 X X</code>）</p>
-</li>
-</ol>
-<p>数据范围：<code>1 ≤ N ≤ 5×10⁴</code>，<code>1 ≤ K ≤ 10⁵</code><a href="https://blog.csdn.net/2201_75683257/article/details/141530324"></a>。</p>
-<p><strong>任务</strong>：输出假话的总数。</p>
-<p><strong>解法思路（带权版本）</strong>：维护每个节点到根的“距离”<code>d[x]</code>，用 <code>d[x] % 3</code> 表示与根的关系（0: 同类，1: 吃根，2: 被根吃）。</p>
-<p>要将 <code>x</code> 所在集合接到 <code>y</code> 所在集合下，已知 <code>x</code> 与 <code>y</code> 的关系为 <code>rel</code>（<code>rel=0</code> 同类，<code>rel=1</code> x 吃 y）：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">x-&gt;rx-&gt;ry  x-&gt;rx d[x]  rx-&gt;ry d[rx]</span><br><span class="line">x-&gt;y-&gt;ry x-&gt;y rel y-&gt;ry d[y]</span><br><span class="line">d[x] + d[rx] ≡ d[y] + <span class="built_in">rel</span> (mod <span class="number">3</span>)</span><br><span class="line">⇒ d[rx] = (d[y] + rel - d[x] + <span class="number">3</span>) % <span class="number">3</span></span><br></pre></td></tr></table></figure>
-<p>完整代码</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">5e4</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> fa[maxn],d[maxn];</span><br><span class="line"><span class="type">int</span> n,k;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x==fa[x]) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="type">int</span> p=fa[x];</span><br><span class="line">    <span class="type">int</span> root=<span class="built_in">find</span>(p);</span><br><span class="line">    d[x]=(d[x]+d[p])%<span class="number">3</span>;</span><br><span class="line">    <span class="keyword">return</span> fa[x]=root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i) fa[i]=i,d[i]=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(k--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> op,x,y;</span><br><span class="line">        cin&gt;&gt;op&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        <span class="keyword">if</span>(x&gt;n || y&gt;n || (op==<span class="number">2</span>&amp;&amp;x==y))</span><br><span class="line">        &#123;</span><br><span class="line">            ans++;<span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> rx=<span class="built_in">find</span>(x),ry=<span class="built_in">find</span>(y);</span><br><span class="line">        <span class="type">int</span> rel=op<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span>(rx==ry)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>((d[x]-d[y]<span class="number">+3</span>)%<span class="number">3</span>!=rel)</span><br><span class="line">            &#123;</span><br><span class="line">                ans++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            fa[rx]=ry;</span><br><span class="line">            d[rx]=(rel+d[y]-d[x]<span class="number">+3</span>)%<span class="number">3</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>解法思路（扩展域版本）</strong>：将每个动物拆成三个节点——<code>x</code>（自身）、<code>x+n</code>（猎物）、<code>x+2n</code>（天敌）。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">50005</span>;</span><br><span class="line"><span class="type">int</span> f[<span class="number">3</span>*maxn];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,k;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n*<span class="number">3</span>;i++) f[i]=i;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;k;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> z,x,y;</span><br><span class="line">        cin&gt;&gt;z&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        <span class="keyword">if</span>(x&gt;n||y&gt;n)</span><br><span class="line">        &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(z==<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(f[<span class="built_in">find</span>(x)]==f[<span class="built_in">find</span>(y+n)]||f[<span class="built_in">find</span>(y)]==f[<span class="built_in">find</span>(x+n)]) cnt++;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                f[<span class="built_in">find</span>(x)]=<span class="built_in">find</span>(y);</span><br><span class="line">                f[<span class="built_in">find</span>(x+n)]=<span class="built_in">find</span>(y+n);</span><br><span class="line">                f[<span class="built_in">find</span>(x<span class="number">+2</span>*n)]=<span class="built_in">find</span>(y<span class="number">+2</span>*n);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(z==<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(f[<span class="built_in">find</span>(x)]==f[<span class="built_in">find</span>(y)]||f[<span class="built_in">find</span>(y)]==<span class="built_in">find</span>(x+n)) cnt++;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                f[<span class="built_in">find</span>(x)]=<span class="built_in">find</span>(y+n);</span><br><span class="line">                f[<span class="built_in">find</span>(x+n)]=<span class="built_in">find</span>(y<span class="number">+2</span>*n);</span><br><span class="line">                f[<span class="built_in">find</span>(x<span class="number">+2</span>*n)]=<span class="built_in">find</span>(y);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;cnt&lt;&lt;endl;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<h4 id="要点总结">要点总结</h4>
-<table>
-<thead>
-<tr>
-<th>题型</th>
-<th>维护的权值含义</th>
-<th>合并公式特征</th>
-<th>代表题目</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>距离/位置</strong></td>
-<td>到根的距离（差值）</td>
-<td><code>d[rx] = sz[ry]</code></td>
-<td>P1196 银河英雄传说</td>
-</tr>
-<tr>
-<td><strong>模数/循环</strong></td>
-<td>模 k 的余数（同类/天敌）</td>
-<td><code>d[rx] = (d[y] + w - d[x]) % k</code></td>
-<td>P2024 食物链</td>
-</tr>
-<tr>
-<td><strong>异或/奇偶</strong></td>
-<td>0 或 1（相同/不同）</td>
-<td><code>d[rx] = d[y] ^ w ^ d[x]</code></td>
-<td>P5937 Parity Game</td>
-</tr>
-<tr>
-<td><strong>比例/商</strong></td>
-<td>倍数关系</td>
-<td><code>d[rx] = d[y] * w / d[x]</code></td>
-<td>LeetCode 399</td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li>
-<p><strong>明确 <code>d[x]</code> 的定义</strong>：它表示 <code>x</code> 到<strong>父节点</strong>的关系，路径压缩后会变成到<strong>根</strong>的关系。</p>
-</li>
-<li>
-<p><strong>记住 <code>find</code> 中要保存父节点</strong>：<code>int p = fa[x];</code>，这是避免错误的铁律。</p>
-</li>
-<li>
-<p><strong>推导合并公式</strong>：画图，用向量思维 <code>x → rx → ry → y</code> 推导 <code>d[rx]</code>。</p>
-</li>
-<li>
-<p><strong>检查模运算</strong>：C++ 负数取模为负，需要 <code>(a % mod + mod) % mod</code> 转换。</p>
-</li>
-<li>
-<p><strong>判断何时使用</strong>：题目中出现“差值”、“距离”、“奇偶”、“倍数”、“A 吃 B”等相对关系时，优先考虑带权并查集。</p>
-</li>
-</ol>
-<h3 id="4-扩展域并查集：需要维护多种关系-状态">4. 扩展域并查集：需要维护多种关系/状态</h3>
-<p>当关系不止“同类/不同类”两种，而是有<strong>多种类型</strong>时（如食物链中的三类关系），可以用扩展域并查集。</p>
-<h4 id="典型例题：P5937-CEOI1999-Parity-Game">典型例题：<a href="https://www.luogu.com.cn/problem/P5937">P5937 [CEOI1999] Parity Game</a></h4>
-<p>给定一个 01 序列，每次询问区间 <code>[l, r]</code> 中 1 的个数是奇数还是偶数。判断最多前多少条询问可以同时满足。</p>
-<p>数据规模：序列长度 <code>&lt;= 10^9</code>，询问数 <code>&lt;= 5000</code>。</p>
-<p><strong>解法思路</strong>：用前缀和 <code>S[i]</code>。询问 <code>[l, r]</code> 中 1 的个数为奇数 ⇔ <code>S[l-1]</code> 与 <code>S[r]</code> 奇偶性不同。将每个前缀和拆成两个节点（奇/偶），用扩展域并查集维护约束。注意 <code>N</code> 很大但询问数很少，需要<strong>离散化</strong>。</p>
-<p><strong>带权 vs 扩展域的选择</strong>：</p>
-<ul>
-<li><strong>带权并查集</strong>：适合维护<strong>数值关系</strong>（距离、差值等），如银河英雄传说；</li>
-<li><strong>扩展域并查集</strong>：思维量较小，适合维护<strong>逻辑关系</strong>（同类/不同类/多种分类），如食物链、关押罪犯、Parity Game。</li>
-</ul>
-<h3 id="5-并查集与其他算法结合">5. 并查集与其他算法结合</h3>
-<p>并查集常作为工具与其他算法配合使用：</p>
-<ul>
-<li><strong>Kruskal 最小生成树</strong>：用并查集判断加入边是否成环；</li>
-<li><strong>离线查询 + 排序</strong>：将询问按某种顺序排序后动态维护连通性；</li>
-<li><strong>ST 表优化建图</strong>：对于区间一一对应的约束，用 ST 表分块 + 并查集优化连边。</li>
-</ul>
-<h2 id="三、题型框架总结">三、题型框架总结</h2>
-<table>
-<thead>
-<tr>
-<th>题型分类</th>
-<th>核心特征</th>
-<th>代表题目</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>模板/基础连通性</strong></td>
-<td>合并与查询</td>
-<td>P3367 【模板】并查集</td>
-</tr>
-<tr>
-<td><strong>普通连通性</strong></td>
-<td>求连通块数量/判断连通</td>
-<td>P1551 亲戚、P1536 村村通、P3958 奶酪</td>
-</tr>
-<tr>
-<td><strong>离线倒序</strong></td>
-<td>删边转加边</td>
-<td>P1197 星球大战、米秋的贴吧吃瓜、ABC447E</td>
-</tr>
-<tr>
-<td><strong>维护集合信息</strong></td>
-<td>集合大小等附加信息</td>
-<td>P3958 奶酪</td>
-</tr>
-<tr>
-<td><strong>扩展域并查集</strong></td>
-<td>拆点表示多种状态/关系</td>
-<td>P1892 团伙、P1525 关押罪犯、P2024 食物链、P5937 Parity Game</td>
-</tr>
-<tr>
-<td><strong>带权并查集</strong></td>
-<td>维护节点到根的数值关系</td>
-<td>P1196 银河英雄传说、P2024 食物链</td>
-</tr>
-<tr>
-<td><strong>并查集 + 其他算法</strong></td>
-<td>作为子模块配合使用</td>
-<td>Kruskal 最小生成树、ST 表优化建图</td>
-</tr>
-</tbody>
-</table>
-<p>并查集本身代码极短，难点在于<strong>抽象能力</strong>——能否把原始问题抽象成集合的合并与查询。做题时可以先问自己三个问题：</p>
-<ol>
-<li><strong>谁是元素？</strong>——问题中的基本对象是什么；</li>
-<li><strong>什么算连通？</strong>——两个对象在什么条件下属于同一集合；</li>
-<li><strong>问什么？</strong>——是问连通性、集合大小、相对关系，还是多种状态的分类？</li>
-</ol>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -925,132 +752,9 @@ dfs2(root, root);
         <category>算法</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>C++</tag>
+        <tag>算法</tag>
         <tag>图</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ABC459</title>
-    <url>/2026/05/23/ABC459/</url>
-    <content><![CDATA[<p>今天只写到D题，但是我还是来写题解了~
-A和B感觉没什么好写的，略了。</p>
-<h1 id="C">C</h1>
-<h2 id="题意">题意</h2>
-<p>给你N个格子，进行Q次操作
-1.在第x个格子里面加1，如果每个格子都大于1，每个格子都需要减去1
-2.查询有几个格子大于x</p>
-<h2 id="思路">思路</h2>
-<p>刚开始想着直接暴力，但是一看范围，嗯100%超时
-每次所有格子大于1的时候都减掉1，如果暴力遍历所有格子好麻烦，那么！我们干脆不要减了，<strong>记录下需要减的次数cnt</strong>
-在查询x的时候，因为我们没有给每个格子减cnt，所以我们需要给x<strong>加上tar</strong>是我们最后得出需要查询的值$tar=cnt+x$
-解决了减掉1的麻烦，还有什么麻烦呢？有没有感觉查询大于tar如果每次都遍历一次好麻烦，那么！如何快速的找到几个格子大于tar呢？我们直接开一个<em><strong>数组<code>S[i]</code>来记录累计次数&gt;=i 的单元格数量</strong>，现在我们查询只要输出<code>S[tar]</code>即可
-好了，问题又来了，我们如何看是否需要<code>cnt++</code>(所有格子减1)，其实思考完上面，这个解决非常简单，只有当</em><em>所有单元格的次数都大于cnt</em>*的时候，我们才要减掉1，我们已经记录了次数数组S，所以只要$S[cnt+1]==n$ 我们就需要<code>cnt++</code></p>
-<h2 id="代码">代码</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,q;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;q;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n<span class="number">+1</span>,<span class="number">0</span>)</span></span>;      </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">S</span><span class="params">(q<span class="number">+5</span>,<span class="number">0</span>)</span></span>;    </span><br><span class="line">    S[<span class="number">0</span>]=n;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> qq=q;</span><br><span class="line">    <span class="keyword">while</span>(q--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> op,x;</span><br><span class="line">        cin&gt;&gt;op&gt;&gt;x;</span><br><span class="line">        <span class="keyword">if</span> (op==<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> c=a[x];</span><br><span class="line">            S[c<span class="number">+1</span>]++;</span><br><span class="line">            a[x]++;</span><br><span class="line">            <span class="keyword">if</span> (S[cnt<span class="number">+1</span>]==n)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (op==<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> tar=cnt+x;</span><br><span class="line">            <span class="comment">// 如果目标要求的累计次数超过了最大操作数q，直接输出0</span></span><br><span class="line">            <span class="keyword">if</span>(tar&gt;qq)</span><br><span class="line">            &#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;0\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                cout&lt;&lt;S[tar]&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="D">D</h1>
-<h2 id="题意-v2">题意</h2>
-<p>给你字符串S，问能不能重新排列 S ，让相邻的两个字符都不相同</p>
-<h2 id="思路-v2">思路</h2>
-<p>找到S中出现最多的字母的个数maxc，l是S的长度，如果最多的字母的个数大于长度的一半+1即$maxc&gt;(l+1)/2$，那么肯定不可以，直接输出No
-如果可以，还需要输出排序后的S
-那么现在我们需要构造S，其实只要交替的放字母就好了，这里我使用了优先队列（堆）来实现</p>
-<h2 id="代码-v2">代码</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">while</span>(n--)</span><br><span class="line">    &#123;</span><br><span class="line">        string s;</span><br><span class="line">        cin&gt;&gt;s;</span><br><span class="line">        map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; mp;</span><br><span class="line">        <span class="type">int</span> l=s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> maxc=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;l;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            mp[s[i]]++;</span><br><span class="line">            <span class="keyword">if</span>(mp[s[i]]&gt;maxc)</span><br><span class="line">            &#123;</span><br><span class="line">                maxc=mp[s[i]];</span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(maxc&lt;=(l<span class="number">+1</span>)/<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">            priority_queue&lt;pair&lt;<span class="type">int</span>, <span class="type">char</span>&gt; &gt; pq;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(mp[i+<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                    pq.<span class="built_in">push</span>(&#123;mp[i+<span class="string">&#x27;a&#x27;</span>],i+<span class="string">&#x27;a&#x27;</span>&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            string ans=<span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="function">pair&lt;<span class="type">int</span>,<span class="type">char</span>&gt; <span class="title">pre</span><span class="params">(<span class="number">-1</span>,<span class="string">&#x27; &#x27;</span>)</span></span>;</span><br><span class="line">            <span class="keyword">while</span>(!pq.<span class="built_in">empty</span>())</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">auto</span> now=pq.<span class="built_in">top</span>();</span><br><span class="line">                pq.<span class="built_in">pop</span>();</span><br><span class="line">                ans+=now.second;</span><br><span class="line">                now.first--;</span><br><span class="line">                <span class="keyword">if</span>(pre.first&gt;<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    pq.<span class="built_in">push</span>(pre);</span><br><span class="line">                &#125;</span><br><span class="line">                pre=now;</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;ans&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>题解</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ABC458</title>
-    <url>/2026/05/16/ABC458/</url>
-    <content><![CDATA[<p>今天写到E题，来写个小小题解吧！</p>
-<h1 id="A">A</h1>
-<h3 id="题意">题意</h3>
-<p>给你一个字符串s，删除前面n个和后面n个字母，然后输出</p>
-<h3 id="思路">思路</h3>
-<p>使用substr进行截取</p>
-<h3 id="代码">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin&gt;&gt;s;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    s=s.<span class="built_in">substr</span>(n);</span><br><span class="line">    <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">    s=s.<span class="built_in">substr</span>(<span class="number">0</span>,len-n);</span><br><span class="line">    cout&lt;&lt;s&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="B">B</h1>
-<h3 id="题意-v2">题意</h3>
-<p>给你一个二维数组，问每一个单元格的相邻的单元格数</p>
-<h3 id="思路-v2">思路</h3>
-<p>超出范围的不算，我们可以假设都为4，然后如果有在边上的就剪掉</p>
-<h3 id="代码-v2">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="type">int</span> n,m;</span><br><span class="line">   cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=m;++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> f=<span class="number">4</span>;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">1</span>) f--;</span><br><span class="line">            <span class="keyword">if</span>(i==n) f--;</span><br><span class="line">            <span class="keyword">if</span>(j==<span class="number">1</span>) f--;</span><br><span class="line">            <span class="keyword">if</span>(j==m) f--;</span><br><span class="line">            cout&lt;&lt;f&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="C">C</h1>
-<h3 id="题意-v3">题意</h3>
-<p>给你一个字符串s，寻找奇数并且&quot;C&quot;在中间的子串个数（不同位置的子串不同）</p>
-<h3 id="思路-v3">思路</h3>
-<p>只要找到每一个位置的”C“，并且计算在每个位置的最长的子串长度的一半，全部加起来</p>
-<h3 id="代码-v3">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin&gt;&gt;s;</span><br><span class="line">    <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">    ll cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i]==<span class="string">&#x27;C&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cnt++;<span class="comment">//单独的&quot;C&quot;也是一个子串</span></span><br><span class="line">            cnt+=<span class="built_in">min</span>(i,len-i<span class="number">-1</span>);<span class="comment">//最长的长度取决于比较短的一边</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;cnt&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="D">D</h1>
-<h3 id="题意-v4">题意</h3>
-<p>给你一个x，然后进行q次加入ai和bi构成序列，并且查询序列的中位数</p>
-<h3 id="思路-v4">思路</h3>
-<p>刚开始以为是中间数，然后觉得怎么这么简单好奇怪，然后看了看样例
-噢!中位数啊，要排序的！！！
-然后想着排序？？于是想到优先队列（堆），但是呢这个是取中间的，不是求最大和最小啊
-那我用两个！一大一小。
-l是大根堆 用来存储所有数字中<strong>较小的那一半</strong>。 <code>l.top()</code>较小那一半之中的<strong>最大值</strong>。
-r是小根堆（通过使用存入负值）用来存储所有数字中<strong>较大的那一半</strong>。<code>r.top()</code> 取负数后代表较大那一半之中的<strong>最小值</strong>。
-因为每次循环都会同时插入两个数。加上初始的 1 个数，总数字个数序列永远是奇数。所以中位数是<code>l.top()</code></p>
-<h3 id="代码-v4">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">priority_queue&lt;<span class="type">int</span>&gt; l,r;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l.<span class="built_in">empty</span>()||x&lt;=l.<span class="built_in">top</span>())</span><br><span class="line">    &#123;</span><br><span class="line">	    <span class="comment">// 比左边最大值还小，说明属于较小的一半</span></span><br><span class="line">        l.<span class="built_in">push</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">	    <span class="comment">// 比左边最大值大，说明属于较大的一半（存负数变小根堆）</span></span><br><span class="line">        r.<span class="built_in">push</span>(-x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//调整两个堆的大小，左堆大小=右堆大小+1(保证l.top()是答案)</span></span><br><span class="line">    <span class="keyword">if</span>(l.<span class="built_in">size</span>()&gt;r.<span class="built_in">size</span>()<span class="number">+1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        r.<span class="built_in">push</span>(-l.<span class="built_in">top</span>());</span><br><span class="line">        l.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(r.<span class="built_in">size</span>()&gt;l.<span class="built_in">size</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        l.<span class="built_in">push</span>(-r.<span class="built_in">top</span>());</span><br><span class="line">        r.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    cin&gt;&gt;x;</span><br><span class="line">    <span class="built_in">insert</span>(x);</span><br><span class="line">    <span class="type">int</span> q;</span><br><span class="line">    cin&gt;&gt;q;</span><br><span class="line">    <span class="keyword">while</span>(q--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> a,b;</span><br><span class="line">        cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">        <span class="built_in">insert</span>(a);</span><br><span class="line">        <span class="built_in">insert</span>(b);</span><br><span class="line">        cout&lt;&lt;l.<span class="built_in">top</span>()&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="E">E</h1>
-<h3 id="题意-v5">题意</h3>
-<p>序列A满足有x1个1，x2个2，x3个3，并且 ∣ai+1​−ai​∣≤1 
-问这样的A的个数，答案模998244353</p>
-<h3 id="思路-v5">思路</h3>
-<p>第一反应动态规划，正准备想转移状态，看了一下x1,x2,x3的范围，1~1e6,好吧，动态规划pass~~
-重新开始看题目条件， ∣ai+1​−ai​∣≤1 ，那么我们推出 1和 3 绝对不能相邻，中间必须有2来隔开
-那么！我们可以将2看成隔板，将1和3插入其中
-将x2个 2 划分出的 x2+1 个空隙，<strong>每一个空隙要么全放 1（且至少放一个），要么全放 3（且至少放一个），要么都不放</strong>。
-假设一共选了 i 个空隙来放 1，选了 j 个空隙来放 3。</p>
-<ol>
-<li><strong>选择空隙的位置</strong>：
-从 x2+1个空隙中选出 i 个放 $1$，再从剩下的空隙中选出j个放 $3$,方案数为：
-$\binom{x2+1}{i} \cdot \binom{x2+1-i}{j}$</li>
-<li><strong>分配元素的数量</strong>：</li>
-</ol>
-<ul>
-<li>将 $x1$ 个相同的 $1$ 放入 $i$ 个<strong>非空</strong>的空隙中，方案数为：$\binom{x1-1}{i-1}$</li>
-<li>将 $x3$ 个相同的 $3$ 放入 $j$ 个<strong>非空</strong>的空隙中，方案数为：$\binom{x3-1}{j-1}$
-所以，对于i和 j，合法的排列数为：</li>
-</ul>
-<p>$$f(i, j) = \binom{x2+1}{i} \binom{x2+1-i}{j} \binom{x1-1}{i-1} \binom{x3-1}{j-1}$$</p>
-<p>然后我们对每一个i和j进行计算，但是这样时间就是1e12，oh no!TLE!
-我们要在进行优化
-当 $i$ 固定时，我们需要对 $j$ 进行求和：</p>
-<p>$$\sum_{j=1}^{x3} \binom{x2+1}{i} \binom{x2+1-i}{j} \binom{x1-1}{i-1} \binom{x3-1}{j-1}$$</p>
-<p>将与 $j$ 无关的项提出来：</p>
-<p>$$\binom{x2+1}{i} \binom{x1-1}{i-1} \sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{j-1}$$</p>
-<p>利用恒等式 $\binom{x3-1}{j-1} = \binom{x3-1}{x3-j}$，后面的求和项变为：</p>
-<p>$$\sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{x3-j}$$</p>
-<p>根据范德蒙德恒等式，这个求和等于从两堆物品（一堆 x2+1-i 个，另一堆 x3-1个）中一共选出 j + (x3-j) = x3 个物品的方案数
-即：</p>
-<p>$$\sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{x3-j} = \binom{x2+x3-i}{x3}$$</p>
-<p>然后我们惊奇的发现 j 没掉了！
-注意：i的个数不能大于x1,也不能大于可用的空隙x2+1
-那么我们可以推出总方案数可以表示为：
-$$ans = \sum_{i=1}^{\min(x1, x2+1)} \binom{x2+1}{i} \binom{x1-1}{i-1} \binom{x2+x3-i}{x3} \pmod{998244353}$$
-代码上面
-我们需要求组合数C，我们对阶乘 fact[]和逆元阶乘 invfact[]进行预处理
-运用费马小定理和快速幂来求出最后一个invfact[N-1],然后倒推剩下的invfact[]</p>
-<h3 id="代码-v5">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">3e6</span><span class="number">+5</span>,mod=<span class="number">998244353</span>;</span><br><span class="line">ll fact[N],invfact[N];</span><br><span class="line"><span class="comment">//快速幂</span></span><br><span class="line"><span class="function">ll <span class="title">pw</span><span class="params">(ll a,ll b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ll res=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>)</span><br><span class="line">            res=(res*a)%mod;</span><br><span class="line">        a=(a*a)%mod;</span><br><span class="line">        b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pre</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fact[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    invfact[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;N;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        fact[i]=(fact[i<span class="number">-1</span>]*i)%mod;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//费马小定理</span></span><br><span class="line">    invfact[N<span class="number">-1</span>]=<span class="built_in">pw</span>(fact[N<span class="number">-1</span>],mod<span class="number">-2</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=N<span class="number">-2</span>;i&gt;=<span class="number">1</span>;--i)</span><br><span class="line">    &#123;</span><br><span class="line">        invfact[i]=(invfact[i<span class="number">+1</span>]*(i<span class="number">+1</span>))%mod;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">C</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(k&lt;<span class="number">0</span>||k&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> fact[n]*invfact[k]%mod*invfact[n-k]%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">pre</span>();</span><br><span class="line">    <span class="type">int</span> x1,x2,x3;</span><br><span class="line">    cin&gt;&gt;x1&gt;&gt;x2&gt;&gt;x3;</span><br><span class="line">    ll ans=<span class="number">0</span>;</span><br><span class="line">    <span class="comment">//i的个数不能大于x1,也不能大于可用的空隙x2+1</span></span><br><span class="line">    <span class="type">int</span> n=<span class="built_in">min</span>(x1,x2<span class="number">+1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        ll sum1=<span class="built_in">C</span>(x2<span class="number">+1</span>,i)%mod;</span><br><span class="line">        ll sum2=<span class="built_in">C</span>(x1<span class="number">-1</span>,i<span class="number">-1</span>)%mod;</span><br><span class="line">        ll sum3=<span class="built_in">C</span>(x3+x2-i,x3)%mod;</span><br><span class="line">        ll now=((sum1*sum2)%mod*sum3)%mod;</span><br><span class="line">        ans=(ans+now)%mod;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>题解</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -1101,6 +805,302 @@ $$ans = \sum_{i=1}^{\min(x1, x2+1)} \binom{x2+1}{i} \binom{x1-1}{i-1} \binom{x2+
       <tags>
         <tag>C++</tag>
         <tag>图</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>并查集题型</title>
+    <url>/2026/07/26/%E5%B9%B6%E6%9F%A5%E9%9B%86%E9%A2%98%E5%9E%8B/</url>
+    <content><![CDATA[<p>并查集解决的是这样一个标准问题：<strong>动态维护若干个不相交的集合，支持合并两个集合与查询两个元素是否属于同一集合</strong>。但在实际问题中，很少会直接给出“请合并集合”的题目。更多时候，我们需要先从题意中找到“连通关系”或“等价关系”，再判断题目究竟需要这种关系的什么信息。</p>
+<p>因此，并查集题型可以沿着两条主线展开：</p>
+<ul>
+<li><strong>怎样识别并查集模型</strong>：对象是什么，什么算“连通”或“属于同一集合”；</li>
+<li><strong>怎样询问</strong>：求连通块数量、集合大小、判断是否成环、带权关系推断，还是扩展域的分类问题。</li>
+</ul>
+<h2 id="一、怎样从原问题中找到并查集模型">一、怎样从原问题中找到并查集模型</h2>
+<h3 id="1-显式的连通性问题">1. 显式的连通性问题</h3>
+<p>问题直接描述“连通”、“相连”、“属于同一组”等概念，是最直接的并查集应用场景。</p>
+<h4 id="典型例题：P1551-亲戚">典型例题：<a href="https://www.luogu.com.cn/problem/P1551">P1551 亲戚</a></h4>
+<p>给定 n 个人、m 对亲戚关系，以及 p 个询问，每次询问两个人是否为亲戚。亲戚关系具有传递性。</p>
+<p><strong>解法思路</strong>：每个人初始是一个独立的集合。每读入一对亲戚关系，就将两人所在的集合合并。查询时只需判断两人是否在同一集合中。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">5000</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> f[maxn];</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> q;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m&gt;&gt;q;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i) f[i]=i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="type">int</span> fx=<span class="built_in">find</span>(x);</span><br><span class="line">		<span class="type">int</span> fy=<span class="built_in">find</span>(y);</span><br><span class="line">		<span class="keyword">if</span>(fx!=fy)</span><br><span class="line">		&#123;</span><br><span class="line">			f[fx]=fy;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;q;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">find</span>(x)==<span class="built_in">find</span>(y))cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">		<span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-关系具有传递性的问题">2. 关系具有传递性的问题</h3>
+<p>当题目中的关系满足“A 与 B 有关系，B 与 C 有关系 ⇒ A 与 C 也有关系”时，就可以用并查集来维护这种等价关系。</p>
+<h4 id="典型例题：P1955-程序自动分析">典型例题：<a href="https://www.luogu.com.cn/problem/P1955">P1955 程序自动分析</a></h4>
+<p>给定若干对变量之间的相等/不等约束，判断是否存在一组赋值使所有约束同时满足。</p>
+<p>数据规模较大，变量编号可达 10^9，需要<strong>离散化</strong>处理。</p>
+<p><strong>解法思路</strong>：将所有相等约束涉及的变量合并到同一集合，然后检查所有不等约束——如果两个变量已在同一集合中，则矛盾。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">2e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Disc</span>&#123;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123; v.<span class="built_in">push_back</span>(x); &#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">sort</span>(v.<span class="built_in">begin</span>(),v.<span class="built_in">end</span>());</span><br><span class="line">		v.<span class="built_in">erase</span>(<span class="built_in">unique</span>(v.<span class="built_in">begin</span>(),v.<span class="built_in">end</span>()),v.<span class="built_in">end</span>());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> v.<span class="built_in">size</span>(); &#125;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">get_idx</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">lower_bound</span>(v.<span class="built_in">begin</span>(),v.<span class="built_in">end</span>(),x)-v.<span class="built_in">begin</span>()<span class="number">+1</span>; &#125;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">get_val</span><span class="params">(<span class="type">int</span> idx)</span> </span>&#123; <span class="keyword">return</span> v[idx<span class="number">-1</span>]; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> f[maxn];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">	<span class="type">int</span> x,y,op;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(node a,node b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a.op&gt;b.op;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line">node a[maxn];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Disc disc;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> x,y,z;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y&gt;&gt;z;</span><br><span class="line">		a[i]=&#123;x,y,z&#125;;</span><br><span class="line">		disc.<span class="built_in">add</span>(x),disc.<span class="built_in">add</span>(y);</span><br><span class="line">	&#125;</span><br><span class="line">	disc.<span class="built_in">init</span>();</span><br><span class="line">	<span class="built_in">sort</span>(a,a+n,cmp);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;N;++i) f[i]=i;</span><br><span class="line">	<span class="type">int</span> ff=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">auto</span> [x,y,op]=a[i];</span><br><span class="line">		x=disc.<span class="built_in">get_idx</span>(x),y=disc.<span class="built_in">get_idx</span>(y);</span><br><span class="line">		<span class="type">int</span> fx=<span class="built_in">find</span>(x),fy=<span class="built_in">find</span>(y);</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(fx!=fy) f[fx]=fy;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(fx==fy) </span><br><span class="line">			&#123;</span><br><span class="line">				ff=<span class="number">0</span>;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ff) cout&lt;&lt;<span class="string">&quot;YES\n&quot;</span>;</span><br><span class="line">	<span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;NO\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这一类问题的核心是：<strong>关系的传递性 = 并查集的合并</strong>。</p>
+<hr>
+<h3 id="3-动态连通性问题（离线倒序）">3. 动态连通性问题（离线倒序）</h3>
+<p>并查集擅长处理<strong>动态添加边</strong>的问题，但当涉及<strong>删除/断开</strong>操作时，直接处理很困难。常用技巧是<strong>离线倒序</strong>——把删除看作反向的添加。</p>
+<h4 id="典型例题：P1197-JSOI2008-星球大战">典型例题：<a href="https://www.luogu.com.cn/problem/P1197">P1197 [JSOI2008] 星球大战</a></h4>
+<p>给定一张无向图，依次摧毁一些节点及其连边，求每次摧毁后连通块的数量。</p>
+<p><strong>解法思路</strong>：正着做是删边，并查集不支持这样的操作。因此<strong>离线读入所有操作，从最终状态开始倒序加边</strong>。先记录所有被摧毁的节点，建出最终剩下的图，然后<strong>倒序</strong>处理摧毁操作——每次“恢复”一个节点及其连边，用并查集合并。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">4e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; adj[maxn];</span><br><span class="line"><span class="type">int</span> fa[maxn],ans[maxn],a[maxn],vis[maxn];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(fa[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">return</span> fa[x]=<span class="built_in">find</span>(fa[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i) fa[i]=i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> u,v;</span><br><span class="line">        cin&gt;&gt;u&gt;&gt;v;</span><br><span class="line">        adj[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">        adj[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    cin&gt;&gt;k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;k;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a[i];</span><br><span class="line">        vis[a[i]]=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> cnt=n-k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> u=<span class="number">0</span>;u&lt;n;++u)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(vis[u]) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> v:adj[u])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(vis[v]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="type">int</span> ru=<span class="built_in">find</span>(u),rv=<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(ru!=rv)</span><br><span class="line">            &#123;</span><br><span class="line">                fa[rv]=ru;</span><br><span class="line">                cnt--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=k<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)</span><br><span class="line">    &#123;</span><br><span class="line">        ans[i]=cnt;cnt++;vis[a[i]]=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> u=a[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> v:adj[u])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(vis[v]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="type">int</span> ru=<span class="built_in">find</span>(u),rv=<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(ru!=rv)</span><br><span class="line">            &#123;</span><br><span class="line">                fa[rv]=ru;</span><br><span class="line">                cnt--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;cnt&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;k;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;ans[i]&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="典型例题：9619-米秋的贴吧吃瓜">典型例题：<a href="https://www.tzcoder.cn/acmhome/problemdetail.do?method=showdetail&amp;id=9619">9619: 米秋的贴吧吃瓜</a></h4>
+<blockquote>
+<p>初始有 N 个同学，M 对直接朋友关系（朋友关系具有传递性，即构成无向图）。接下来 Q 个操作按时间顺序出现：</p>
+<ul>
+<li>
+<p><code>1 U V</code>：U 和 V 绝交（删除这条直接边）；</p>
+</li>
+<li>
+<p><code>2 U V</code>：查询 U 和 V 当前是否还在同一个交际圈（即是否连通）。</p>
+</li>
+</ul>
+<p>数据范围：所有测试用例的 N, M, Q 总和分别 ≤ 1.5 × 10⁵。保证初始无重边自环，每对朋友最多绝交一次。</p>
+</blockquote>
+<p><strong>解法思路</strong>：</p>
+<p>并查集天生支持加边（合并），不支持删边。面对“边被逐步删除”的场景，常用技巧是 <strong>离线倒序处理</strong>：</p>
+<ol>
+<li>
+<p><strong>记录所有绝交操作</strong>，把将来会被删除的初始边标记出来。</p>
+</li>
+<li>
+<p><strong>构建最终状态</strong>：只保留那些<strong>从未被绝交过</strong>的初始边，得到最后一刻的并查集。</p>
+</li>
+<li>
+<p><strong>从后往前回放操作</strong>：</p>
+<ul>
+<li>
+<p>遇到查询 <code>2 U V</code>：直接用当前并查集回答，存储答案。</p>
+</li>
+<li>
+<p>遇到绝交 <code>1 U V</code>：<strong>恢复这条边</strong>（因为倒序看，这条边是在这个时刻被删除的，往前它就是存在的），执行 <code>unite(U, V)</code>。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>最后把存储的答案正序输出即可。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">1e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> fa[maxn];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(fa[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> fa[x]=<span class="built_in">find</span>(fa[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Edge</span>&#123;</span><br><span class="line">	<span class="type">int</span> op,u,v;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> n,m,q;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">	<span class="type">int</span> u,v;</span><br><span class="line">&#125;;</span><br><span class="line">node adj[maxn];</span><br><span class="line">Edge a[maxn];</span><br><span class="line"><span class="type">int</span> ans[maxn];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m&gt;&gt;q;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=n;++i) fa[i]=i;</span><br><span class="line">	map&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;,<span class="type">int</span> &gt; mp;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> u,v;</span><br><span class="line">		cin&gt;&gt;u&gt;&gt;v;</span><br><span class="line">		adj[i]=&#123;u,v&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;q;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> op,u,v;</span><br><span class="line">		cin&gt;&gt;op&gt;&gt;u&gt;&gt;v;</span><br><span class="line">		<span class="keyword">if</span>(u&gt;v) <span class="built_in">swap</span>(u,v);</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="number">1</span>) mp[&#123;u,v&#125;]=<span class="number">1</span>;</span><br><span class="line">		a[i]=&#123;op,u,v&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> u=adj[i].u,v=adj[i].v;</span><br><span class="line">		<span class="keyword">if</span>(mp[&#123;u,v&#125;]) <span class="keyword">continue</span>;</span><br><span class="line">		<span class="type">int</span> ru=<span class="built_in">find</span>(u);<span class="type">int</span> rv=<span class="built_in">find</span>(v);</span><br><span class="line">		<span class="keyword">if</span>(ru!=rv) </span><br><span class="line">		&#123;</span><br><span class="line">			fa[ru]=rv;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=q<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> op=a[i].op,u=a[i].u,v=a[i].v;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> ru=<span class="built_in">find</span>(u);<span class="type">int</span> rv=<span class="built_in">find</span>(v);</span><br><span class="line">			<span class="keyword">if</span>(ru!=rv) </span><br><span class="line">			&#123;</span><br><span class="line">				ans[i]=<span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> ans[i]=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(op==<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> ru=<span class="built_in">find</span>(u);<span class="type">int</span> rv=<span class="built_in">find</span>(v);</span><br><span class="line">			<span class="keyword">if</span>(ru!=rv) </span><br><span class="line">			&#123;</span><br><span class="line">				fa[ru]=rv;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;q;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> op=a[i].op;</span><br><span class="line">		<span class="keyword">if</span>(op==<span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(ans[i]) cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">			<span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="典型例题：ABC447-E-Divide-Graph">典型例题：<a href="https://atcoder.jp/contests/abc447/tasks/abc447_e">ABC447 E - Divide Graph</a></h4>
+<p>给定一个包含 <code>n</code> 个点、<code>m</code> 条边的带权无向图，第 <code>i</code> 条边的权值为 <code>2^i</code>（<code>i</code> 从 1 开始）。你需要删掉一些边，使得图<strong>不连通</strong>，求<strong>删掉的边权值和最小</strong>是多少。</p>
+<p>数据规模：<code>1 &lt;= n &lt;= 2e5</code>，<code>1 &lt;= m &lt;= 2e5</code></p>
+<p><strong>解法思路</strong>：</p>
+<p>删边最小化，等价于<strong>保留边最大化</strong>——在保证图不连通的前提下，尽可能保留权值大的边。</p>
+<p>由于第 <code>i</code> 条边的权值是 <code>2^i</code>，它<strong>严格大于</strong>前面所有边的权值之和（<code>2^1 + 2^2 + ... + 2^{i-1} &lt; 2^i</code>）。这个性质使得贪心策略成立：</p>
+<ul>
+<li>从权值<strong>从大到小</strong>（即从第 <code>m</code> 条边到第 <code>1</code> 条边）依次考虑每条边；</li>
+<li>如果加入这条边<strong>不会让图变得连通</strong>（即当前连通块数量 &gt; 2），就<strong>保留</strong>它；</li>
+<li>如果加入这条边会让图连通（即当前连通块数量 == 2 且这条边连接了两个不同的连通块），则<strong>不能保留</strong>，计入删掉的边权和。</li>
+</ul>
+<p>用<strong>并查集</strong>维护当前图的连通性，<code>cnt</code> 记录当前连通块数量。初始时 <code>cnt = n</code>。从大到小遍历所有边：</p>
+<ul>
+<li>若两个端点已在同一集合：这条边保留与否不影响连通性，可以直接<strong>保留</strong>（不计入答案）；</li>
+<li>若两个端点在不同集合：
+<ul>
+<li>若 <code>cnt &gt; 2</code>：合并两个集合，<code>cnt--</code>，<strong>保留</strong>这条边；</li>
+<li>若 <code>cnt == 2</code>：此时若合并，图就变成 1 个连通块（即连通了），所以这条边<strong>必须删掉</strong>，将 <code>2^i</code> 加入答案。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">2e5</span><span class="number">+5</span>,mod=<span class="number">998244353</span>;</span><br><span class="line"><span class="type">int</span> f[maxn],v[maxn],u[maxn],cost[maxn];</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) f[i]=i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">     &#123;</span><br><span class="line">	    cin&gt;&gt;u[i]&gt;&gt;v[i];</span><br><span class="line">        cost[i]=(<span class="number">1</span>&lt;&lt;i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> cnt=n,ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=m;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">    &#123;</span><br><span class="line">	    rv=<span class="built_in">find</span>(v[i]),ru=<span class="built_in">find</span>(u[i]);</span><br><span class="line">        <span class="keyword">if</span>(rv!=ru)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(cnt&gt;<span class="number">2</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt--;</span><br><span class="line">                f[rv]=ru;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> ans=(ans+cost[i])%mod;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本题的关键在于两点：</p>
+<ol>
+<li><strong>反向思维</strong>：删边最小化 → 保留边最大化；</li>
+<li><strong>特殊边权</strong>：<code>2^i</code> 的幂次性质保证了贪心策略的正确性——优先保留大边。</li>
+</ol>
+<p>这与前面两题的离线倒序思路有相似之处，但本题的“倒序”体现在<strong>按边权从大到小处理</strong>，而非按时间顺序倒序。</p>
+<p>这道题的核心是<strong>贪心 + 并查集维护连通性</strong>，属于并查集题型中的 <strong>“动态连通性 + 贪心选择”</strong> 类别。</p>
+<hr>
+<h3 id="4-通过“反集”处理矛盾关系（扩展域并查集）">4. 通过“反集”处理矛盾关系（扩展域并查集）</h3>
+<p>当关系不只是“同类”，还涉及“不同类”、“敌对”等二元对立关系时，可以用<strong>扩展域并查集</strong>（种类并查集）。</p>
+<h4 id="典型例题：P1892-BOI2003-团伙">典型例题：<a href="https://www.luogu.com.cn/problem/P1892">P1892 [BOI2003] 团伙</a></h4>
+<p>给定 n 个人和若干条“朋友”或“敌人”关系。朋友的朋友是朋友，敌人的敌人也是朋友。求最多有多少个团伙。</p>
+<p><strong>解法思路</strong>：将每个人拆成两个节点——<code>i</code> 表示本人，<code>i+n</code> 表示其敌人。</p>
+<ul>
+<li>朋友关系：合并 <code>i</code> 和 <code>j</code></li>
+<li>敌人关系：合并 <code>i</code> 与 <code>j+n</code>，合并 <code>i+n</code> 与 <code>j</code></li>
+</ul>
+<p>最终统计集合数量即为答案。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">1e3</span><span class="number">+2</span>;</span><br><span class="line"><span class="type">int</span> f[maxn*<span class="number">2</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,m;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">2</span>*n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		f[i]=i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">char</span> opt;</span><br><span class="line">		<span class="type">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;opt&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="keyword">if</span>(opt==<span class="string">&#x27;F&#x27;</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			f[<span class="built_in">find</span>(x)]=<span class="built_in">find</span>(y);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			f[<span class="built_in">find</span>(y+n)]=<span class="built_in">find</span>(x);</span><br><span class="line">			f[<span class="built_in">find</span>(x+n)]=<span class="built_in">find</span>(y);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(f[i]==i) cnt++;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;cnt&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>扩展域并查集的核心思想是<strong>拆点</strong>：一个元素拆成多个节点来表示不同的状态/角色。</p>
+<h2 id="二、怎样询问这条链（集合）">二、怎样询问这条链（集合）</h2>
+<h3 id="1-仅需判断连通性">1. 仅需判断连通性</h3>
+<p>最基本的询问：两个元素是否在同一集合中，或连通块的数量。</p>
+<h4 id="典型例题：P1536-村村通">典型例题：<a href="https://www.luogu.com.cn/problem/P1536">P1536 村村通</a></h4>
+<p>给定 n 个村庄和 m 条已建道路，求至少还需要修多少条路才能使所有村庄连通。</p>
+<p><strong>解法思路</strong>：用并查集统计当前连通块数量 <code>cnt</code>，需要修的道路数为 <code>cnt - 1</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">2000005</span>;</span><br><span class="line"><span class="type">int</span> f[maxn];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x!=f[x]) f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">    <span class="keyword">return</span> f[x];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    <span class="keyword">while</span>(cin&gt;&gt;n,n)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i) f[i]=i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> x,y;</span><br><span class="line">            cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">            <span class="type">int</span> fx=<span class="built_in">find</span>(x);</span><br><span class="line">            <span class="type">int</span> fy=<span class="built_in">find</span>(y);</span><br><span class="line">            <span class="keyword">if</span>(fx!=fy) f[fx]=fy;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> ans=n<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(f[i]!=i) --ans;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-需要维护集合大小-其他信息">2. 需要维护集合大小/其他信息</h3>
+<p>除了连通性，有时还需要知道每个集合的大小等信息。</p>
+<h4 id="典型例题：P3958-NOIP2017-提高组-奶酪">典型例题：<a href="https://www.luogu.com.cn/problem/P3958">P3958 [NOIP2017 提高组] 奶酪</a></h4>
+<p>在一个三维空间中，有若干个半径相同的球形空洞。如果两个空洞相交或相切，则它们连通。判断是否存在一条从底部到顶部的通路。</p>
+<p><strong>解法思路</strong>：每个空洞是一个元素。若两个空洞相交/相切则合并。另外将底部和顶部也作为特殊节点，若空洞与底部/顶部相交则合并。最终判断底部和顶部是否在同一集合中。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">1e3</span><span class="number">+5</span>;</span><br><span class="line">ll n,h,r;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">    ll x,y,z;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dist</span><span class="params">(node a,node b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+(a.z-b.z)*(a.z-b.z)&lt;=<span class="number">4ll</span>*r*r;</span><br><span class="line">&#125;</span><br><span class="line">node a[maxn];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DSU</span> &#123;</span><br><span class="line"><span class="comment">/* ======================================== */</span></span><br><span class="line"><span class="type">int</span> fa[maxn], siz[maxn];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">( <span class="type">int</span> N )</span> </span>&#123; <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">0</span>; i &lt;= N; ++ i ) fa[i] = i, siz[i] = <span class="number">1</span>; &#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">( <span class="type">int</span> x )</span> </span>&#123; <span class="keyword">return</span> fa[x] == x ? x : fa[x] = <span class="built_in">find</span>( fa[x] ); &#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">merge</span><span class="params">( <span class="type">int</span> x, <span class="type">int</span> y )</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> rx = <span class="built_in">find</span>( x ), ry = <span class="built_in">find</span>( y );</span><br><span class="line">    <span class="keyword">if</span>( rx == ry ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>( siz[rx] &gt; siz[ry] ) <span class="built_in">swap</span>( rx, ry );</span><br><span class="line">    fa[rx] = ry, siz[ry] += siz[rx];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">same</span><span class="params">( <span class="type">int</span> x, <span class="type">int</span> y )</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">find</span>( x ) == <span class="built_in">find</span>( y ); &#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">size</span><span class="params">( <span class="type">int</span> x )</span> </span>&#123; <span class="keyword">return</span> siz[<span class="built_in">find</span>( x )]; &#125;</span><br><span class="line"><span class="comment">/* ======================================== */</span></span><br><span class="line">&#125; dsu;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;h&gt;&gt;r;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        ll x,y,z;</span><br><span class="line">        cin&gt;&gt;x&gt;&gt;y&gt;&gt;z;</span><br><span class="line">        a[i]=&#123;x,y,z&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    dsu.<span class="built_in">init</span>(n<span class="number">+1</span>);</span><br><span class="line">    <span class="type">int</span> flag0=<span class="number">0</span>,flagh=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(a[i].z+r&gt;=h) flagh=<span class="number">1</span>,dsu.<span class="built_in">merge</span>(i,n<span class="number">+1</span>);</span><br><span class="line">        <span class="keyword">if</span>(a[i].z-r&lt;=<span class="number">0</span>) flag0=<span class="number">1</span>,dsu.<span class="built_in">merge</span>(i,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!flag0 || !flagh) </span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=i<span class="number">+1</span>;j&lt;=n;++j)</span><br><span class="line">        &#123;</span><br><span class="line">            node x=a[i],y=a[j];</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">dist</span>(x,y)) </span><br><span class="line">            &#123;</span><br><span class="line">                dsu.<span class="built_in">merge</span>(i,j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dsu.<span class="built_in">same</span>(<span class="number">0</span>,n<span class="number">+1</span>))  cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-带权并查集：需要维护节点间的关系">3. 带权并查集：需要维护节点间的关系</h3>
+<p>当题目不仅询问“是否在同一集合”，还要求知道集合内元素之间的<strong>相对关系</strong>（如距离、差值、奇偶性等）时，需要使用<strong>带权并查集</strong>。</p>
+<h4 id="典型例题：P1196-NOI2002-银河英雄传说">典型例题：<a href="https://www.luogu.com.cn/problem/P1196">P1196 [NOI2002] 银河英雄传说</a></h4>
+<p>有 n 列战舰，支持两种操作：将某一列整体接到另一列末尾；查询两艘战舰在同一列中的距离。</p>
+<p><strong>解法思路</strong>：维护<strong>战舰 <code>x</code> 到其所在列队首（即根节点）的距离 <code>d[x]</code></strong>。合并时更新被合并列的根节点的 <code>d</code> 值。路径压缩时累加 <code>d</code> 值。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(x==fa[x]) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="type">int</span> root=<span class="built_in">find</span>(fa[x]);</span><br><span class="line">    d[x]+=d[fa[x]];  <span class="comment">// 累加距离</span></span><br><span class="line">    <span class="keyword">return</span> fa[x]=root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完整代码</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">30000</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> fa[maxn],d[maxn],sz[maxn];</span><br><span class="line"><span class="comment">//d[x]表示x 到其所在列队根节点的距离</span></span><br><span class="line"><span class="comment">//sz[x]表示x的战舰总数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x==fa[x]) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="type">int</span> root=<span class="built_in">find</span>(fa[x]);</span><br><span class="line">    d[x]+=d[fa[x]];</span><br><span class="line">    <span class="keyword">return</span> fa[x]=root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">30000</span>;++i) fa[i]=i,d[i]=<span class="number">0</span>,sz[i]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(n--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> op;</span><br><span class="line">        <span class="type">int</span> x,y;</span><br><span class="line">        cin&gt;&gt;op&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        <span class="type">int</span> rx=<span class="built_in">find</span>(x),ry=<span class="built_in">find</span>(y);</span><br><span class="line">        <span class="keyword">if</span>(op==<span class="string">&#x27;M&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(rx!=ry)</span><br><span class="line">            &#123;</span><br><span class="line">                fa[rx]=ry;</span><br><span class="line">                d[rx]=sz[ry];</span><br><span class="line">                sz[ry]+=sz[rx];     </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(rx!=ry) cout&lt;&lt;<span class="string">&quot;-1\n&quot;</span>;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                cout&lt;&lt;<span class="built_in">abs</span>(d[x]-d[y])<span class="number">-1</span>&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>查询两艘战舰的距离：若在同一集合中，答案为 <code>abs(d[a] - d[b]) - 1</code>。</p>
+<h4 id="典型例题：P2024-NOI2001-食物链">典型例题：<a href="https://www.luogu.com.cn/problem/P2024">P2024 [NOI2001] 食物链</a></h4>
+<p>动物王国中有三类动物 A、B、C，构成环形食物链：<strong>A 吃 B，B 吃 C，C 吃 A</strong>。现有 N 个动物（编号 1~N），用 K 句话描述它们之间的关系：</p>
+<ul>
+<li>
+<p><code>1 X Y</code>：X 和 Y 是同类</p>
+</li>
+<li>
+<p><code>2 X Y</code>：X 吃 Y</p>
+</li>
+</ul>
+<p>一句话是<strong>假话</strong>当且仅当满足以下三条之一<a href="https://www.cnblogs.com/DarkValkyrie/p/10979331.html"></a><a href="https://blog.csdn.net/2201_75683257/article/details/141530324"></a>：</p>
+<ol>
+<li>
+<p>当前的话与前面某些真的话冲突</p>
+</li>
+<li>
+<p>当前话中 X 或 Y 比 N 大</p>
+</li>
+<li>
+<p>当前话表示 X 吃 X（即 <code>2 X X</code>）</p>
+</li>
+</ol>
+<p>数据范围：<code>1 ≤ N ≤ 5×10⁴</code>，<code>1 ≤ K ≤ 10⁵</code><a href="https://blog.csdn.net/2201_75683257/article/details/141530324"></a>。</p>
+<p><strong>任务</strong>：输出假话的总数。</p>
+<p><strong>解法思路（带权版本）</strong>：维护每个节点到根的“距离”<code>d[x]</code>，用 <code>d[x] % 3</code> 表示与根的关系（0: 同类，1: 吃根，2: 被根吃）。</p>
+<p>要将 <code>x</code> 所在集合接到 <code>y</code> 所在集合下，已知 <code>x</code> 与 <code>y</code> 的关系为 <code>rel</code>（<code>rel=0</code> 同类，<code>rel=1</code> x 吃 y）：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">x-&gt;rx-&gt;ry  x-&gt;rx d[x]  rx-&gt;ry d[rx]</span><br><span class="line">x-&gt;y-&gt;ry x-&gt;y rel y-&gt;ry d[y]</span><br><span class="line">d[x] + d[rx] ≡ d[y] + <span class="built_in">rel</span> (mod <span class="number">3</span>)</span><br><span class="line">⇒ d[rx] = (d[y] + rel - d[x] + <span class="number">3</span>) % <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>完整代码</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">5e4</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> fa[maxn],d[maxn];</span><br><span class="line"><span class="type">int</span> n,k;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x==fa[x]) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="type">int</span> p=fa[x];</span><br><span class="line">    <span class="type">int</span> root=<span class="built_in">find</span>(p);</span><br><span class="line">    d[x]=(d[x]+d[p])%<span class="number">3</span>;</span><br><span class="line">    <span class="keyword">return</span> fa[x]=root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i) fa[i]=i,d[i]=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(k--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> op,x,y;</span><br><span class="line">        cin&gt;&gt;op&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        <span class="keyword">if</span>(x&gt;n || y&gt;n || (op==<span class="number">2</span>&amp;&amp;x==y))</span><br><span class="line">        &#123;</span><br><span class="line">            ans++;<span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> rx=<span class="built_in">find</span>(x),ry=<span class="built_in">find</span>(y);</span><br><span class="line">        <span class="type">int</span> rel=op<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span>(rx==ry)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>((d[x]-d[y]<span class="number">+3</span>)%<span class="number">3</span>!=rel)</span><br><span class="line">            &#123;</span><br><span class="line">                ans++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            fa[rx]=ry;</span><br><span class="line">            d[rx]=(rel+d[y]-d[x]<span class="number">+3</span>)%<span class="number">3</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解法思路（扩展域版本）</strong>：将每个动物拆成三个节点——<code>x</code>（自身）、<code>x+n</code>（猎物）、<code>x+2n</code>（天敌）。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">50005</span>;</span><br><span class="line"><span class="type">int</span> f[<span class="number">3</span>*maxn];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(f[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> f[x]=<span class="built_in">find</span>(f[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,k;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n*<span class="number">3</span>;i++) f[i]=i;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;k;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> z,x,y;</span><br><span class="line">        cin&gt;&gt;z&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        <span class="keyword">if</span>(x&gt;n||y&gt;n)</span><br><span class="line">        &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(z==<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(f[<span class="built_in">find</span>(x)]==f[<span class="built_in">find</span>(y+n)]||f[<span class="built_in">find</span>(y)]==f[<span class="built_in">find</span>(x+n)]) cnt++;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                f[<span class="built_in">find</span>(x)]=<span class="built_in">find</span>(y);</span><br><span class="line">                f[<span class="built_in">find</span>(x+n)]=<span class="built_in">find</span>(y+n);</span><br><span class="line">                f[<span class="built_in">find</span>(x<span class="number">+2</span>*n)]=<span class="built_in">find</span>(y<span class="number">+2</span>*n);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(z==<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(f[<span class="built_in">find</span>(x)]==f[<span class="built_in">find</span>(y)]||f[<span class="built_in">find</span>(y)]==<span class="built_in">find</span>(x+n)) cnt++;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                f[<span class="built_in">find</span>(x)]=<span class="built_in">find</span>(y+n);</span><br><span class="line">                f[<span class="built_in">find</span>(x+n)]=<span class="built_in">find</span>(y<span class="number">+2</span>*n);</span><br><span class="line">                f[<span class="built_in">find</span>(x<span class="number">+2</span>*n)]=<span class="built_in">find</span>(y);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;cnt&lt;&lt;endl;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h4 id="要点总结">要点总结</h4>
+<table>
+<thead>
+<tr>
+<th>题型</th>
+<th>维护的权值含义</th>
+<th>合并公式特征</th>
+<th>代表题目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>距离/位置</strong></td>
+<td>到根的距离（差值）</td>
+<td><code>d[rx] = sz[ry]</code></td>
+<td>P1196 银河英雄传说</td>
+</tr>
+<tr>
+<td><strong>模数/循环</strong></td>
+<td>模 k 的余数（同类/天敌）</td>
+<td><code>d[rx] = (d[y] + w - d[x]) % k</code></td>
+<td>P2024 食物链</td>
+</tr>
+<tr>
+<td><strong>异或/奇偶</strong></td>
+<td>0 或 1（相同/不同）</td>
+<td><code>d[rx] = d[y] ^ w ^ d[x]</code></td>
+<td>P5937 Parity Game</td>
+</tr>
+<tr>
+<td><strong>比例/商</strong></td>
+<td>倍数关系</td>
+<td><code>d[rx] = d[y] * w / d[x]</code></td>
+<td>LeetCode 399</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p><strong>明确 <code>d[x]</code> 的定义</strong>：它表示 <code>x</code> 到<strong>父节点</strong>的关系，路径压缩后会变成到<strong>根</strong>的关系。</p>
+</li>
+<li>
+<p><strong>记住 <code>find</code> 中要保存父节点</strong>：<code>int p = fa[x];</code>，这是避免错误的铁律。</p>
+</li>
+<li>
+<p><strong>推导合并公式</strong>：画图，用向量思维 <code>x → rx → ry → y</code> 推导 <code>d[rx]</code>。</p>
+</li>
+<li>
+<p><strong>检查模运算</strong>：C++ 负数取模为负，需要 <code>(a % mod + mod) % mod</code> 转换。</p>
+</li>
+<li>
+<p><strong>判断何时使用</strong>：题目中出现“差值”、“距离”、“奇偶”、“倍数”、“A 吃 B”等相对关系时，优先考虑带权并查集。</p>
+</li>
+</ol>
+<h3 id="4-扩展域并查集：需要维护多种关系-状态">4. 扩展域并查集：需要维护多种关系/状态</h3>
+<p>当关系不止“同类/不同类”两种，而是有<strong>多种类型</strong>时（如食物链中的三类关系），可以用扩展域并查集。</p>
+<h4 id="典型例题：P5937-CEOI1999-Parity-Game">典型例题：<a href="https://www.luogu.com.cn/problem/P5937">P5937 [CEOI1999] Parity Game</a></h4>
+<p>给定一个 01 序列，每次询问区间 <code>[l, r]</code> 中 1 的个数是奇数还是偶数。判断最多前多少条询问可以同时满足。</p>
+<p>数据规模：序列长度 <code>&lt;= 10^9</code>，询问数 <code>&lt;= 5000</code>。</p>
+<p><strong>解法思路</strong>：用前缀和 <code>S[i]</code>。询问 <code>[l, r]</code> 中 1 的个数为奇数 ⇔ <code>S[l-1]</code> 与 <code>S[r]</code> 奇偶性不同。将每个前缀和拆成两个节点（奇/偶），用扩展域并查集维护约束。注意 <code>N</code> 很大但询问数很少，需要<strong>离散化</strong>。</p>
+<p><strong>带权 vs 扩展域的选择</strong>：</p>
+<ul>
+<li><strong>带权并查集</strong>：适合维护<strong>数值关系</strong>（距离、差值等），如银河英雄传说；</li>
+<li><strong>扩展域并查集</strong>：思维量较小，适合维护<strong>逻辑关系</strong>（同类/不同类/多种分类），如食物链、关押罪犯、Parity Game。</li>
+</ul>
+<h3 id="5-并查集与其他算法结合">5. 并查集与其他算法结合</h3>
+<p>并查集常作为工具与其他算法配合使用：</p>
+<ul>
+<li><strong>Kruskal 最小生成树</strong>：用并查集判断加入边是否成环；</li>
+<li><strong>离线查询 + 排序</strong>：将询问按某种顺序排序后动态维护连通性；</li>
+<li><strong>ST 表优化建图</strong>：对于区间一一对应的约束，用 ST 表分块 + 并查集优化连边。</li>
+</ul>
+<h2 id="三、题型框架总结">三、题型框架总结</h2>
+<table>
+<thead>
+<tr>
+<th>题型分类</th>
+<th>核心特征</th>
+<th>代表题目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模板/基础连通性</strong></td>
+<td>合并与查询</td>
+<td>P3367 【模板】并查集</td>
+</tr>
+<tr>
+<td><strong>普通连通性</strong></td>
+<td>求连通块数量/判断连通</td>
+<td>P1551 亲戚、P1536 村村通、P3958 奶酪</td>
+</tr>
+<tr>
+<td><strong>离线倒序</strong></td>
+<td>删边转加边</td>
+<td>P1197 星球大战、米秋的贴吧吃瓜、ABC447E</td>
+</tr>
+<tr>
+<td><strong>维护集合信息</strong></td>
+<td>集合大小等附加信息</td>
+<td>P3958 奶酪</td>
+</tr>
+<tr>
+<td><strong>扩展域并查集</strong></td>
+<td>拆点表示多种状态/关系</td>
+<td>P1892 团伙、P1525 关押罪犯、P2024 食物链、P5937 Parity Game</td>
+</tr>
+<tr>
+<td><strong>带权并查集</strong></td>
+<td>维护节点到根的数值关系</td>
+<td>P1196 银河英雄传说、P2024 食物链</td>
+</tr>
+<tr>
+<td><strong>并查集 + 其他算法</strong></td>
+<td>作为子模块配合使用</td>
+<td>Kruskal 最小生成树、ST 表优化建图</td>
+</tr>
+</tbody>
+</table>
+<p>并查集本身代码极短，难点在于<strong>抽象能力</strong>——能否把原始问题抽象成集合的合并与查询。做题时可以先问自己三个问题：</p>
+<ol>
+<li><strong>谁是元素？</strong>——问题中的基本对象是什么；</li>
+<li><strong>什么算连通？</strong>——两个对象在什么条件下属于同一集合；</li>
+<li><strong>问什么？</strong>——是问连通性、集合大小、相对关系，还是多种状态的分类？</li>
+</ol>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -1160,30 +1160,48 @@ $$ans = \sum_{i=1}^{\min(x1, x2+1)} \binom{x2+1}{i} \binom{x1-1}{i-1} \binom{x2+
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/js/click-stars.js</url>
+    <content><![CDATA[// 点击出现星星/月亮特效（鼠标处上飘、旋转、渐隐）
+(() => {
+  const GLYPHS = ['✦', '★', '☆', '✧', '🌙', '✨']
+  const COLORS = ['#49b1f5', '#2f80ed', '#7b68ee', '#ffd66b', '#00c4b6']
+  const isDesktop = window.matchMedia && window.matchMedia('(pointer: fine)').matches
+
+  document.addEventListener('click', e => {
+    if (!isDesktop) return
+    const span = document.createElement('span')
+    span.textContent = GLYPHS[(Math.random() * GLYPHS.length) | 0]
+    span.style.cssText = [
+      'position:fixed',
+      'left:' + e.clientX + 'px',
+      'top:' + e.clientY + 'px',
+      'font-size:' + (14 + Math.random() * 18) + 'px',
+      'color:' + COLORS[(Math.random() * COLORS.length) | 0],
+      'pointer-events:none',
+      'z-index:99999',
+      'transform:translate(-50%, -50%)',
+      'transition:all .9s ease-out',
+      'opacity:1',
+      'user-select:none'
+    ].join(';')
+    document.body.appendChild(span)
+    const dx = (Math.random() - 0.5) * 70
+    const dy = -(40 + Math.random() * 60)
+    const rot = (Math.random() * 120 - 60).toFixed(0)
+    requestAnimationFrame(() => {
+      span.style.transform = 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) rotate(' + rot + 'deg)'
+      span.style.opacity = '0'
+    })
+    setTimeout(() => span.remove(), 950)
+  })
+})()
+]]></content>
+  </entry>
+  <entry>
     <title>分类</title>
     <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>标签</title>
-    <url>/tags/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>关于</title>
-    <url>/about/index.html</url>
-    <content><![CDATA[<h1 id="你好，我是梵诗-👋">你好，我是梵诗 👋</h1>
-<p>一名算法竞赛爱好者，主攻 <strong>C++</strong>。平时喜欢刷题、补题、整理题解。</p>
-<ul>
-<li>📌 常用 OJ：AtCoder、洛谷</li>
-<li>📝 博客内容：AtCoder 题解、图论 / 数据结构学习笔记</li>
-<li>🐙 GitHub：<a href="https://github.com/lhhyyy666">lhhyyy666</a></li>
-</ul>
-<div class="note blue icon-padding flat"><i class="note-icon fas fa-fan"></i><p>海压竹枝低复举，风吹山角晦还明。—— 记录我的刷题之路</p>
-</div>
-<div class="note green icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>博客所有题解均为个人理解，如有错误欢迎在评论区指出，一起交流进步！</p>
-</div>
-]]></content>
   </entry>
   <entry>
     <title>友链</title>
@@ -1218,5 +1236,26 @@ $$ans = \sum_{i=1}^{\min(x1, x2+1)} \binom{x2+1}{i} \binom{x1-1}{i-1} \binom{x2+
         </a>
       </div></div></div>
 ]]></content>
+  </entry>
+  <entry>
+    <title>关于</title>
+    <url>/about/index.html</url>
+    <content><![CDATA[<h1 id="你好，我是梵诗-👋">你好，我是梵诗 👋</h1>
+<p>一名算法竞赛爱好者，主攻 <strong>C++</strong>。平时喜欢刷题、补题、整理题解。</p>
+<ul>
+<li>📌 常用 OJ：AtCoder、洛谷</li>
+<li>📝 博客内容：AtCoder 题解、图论 / 数据结构学习笔记</li>
+<li>🐙 GitHub：<a href="https://github.com/lhhyyy666">lhhyyy666</a></li>
+</ul>
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-fan"></i><p>海压竹枝低复举，风吹山角晦还明。—— 记录我的刷题之路</p>
+</div>
+<div class="note green icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>博客所有题解均为个人理解，如有错误欢迎在评论区指出，一起交流进步！</p>
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title>标签</title>
+    <url>/tags/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
