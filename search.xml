@@ -20,129 +20,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ABC459</title>
-    <url>/2026/05/23/ABC459/</url>
-    <content><![CDATA[<p>今天只写到D题，但是我还是来写题解了~<br>
-A和B感觉没什么好写的，略了。</p>
-<h1 id="C">C</h1>
-<h2 id="题意">题意</h2>
-<p>给你N个格子，进行Q次操作<br>
-1.在第x个格子里面加1，如果每个格子都大于1，每个格子都需要减去1<br>
-2.查询有几个格子大于x</p>
-<h2 id="思路">思路</h2>
-<p>刚开始想着直接暴力，但是一看范围，嗯100%超时<br>
-每次所有格子大于1的时候都减掉1，如果暴力遍历所有格子好麻烦，那么！我们干脆不要减了，<strong>记录下需要减的次数cnt</strong><br>
-在查询x的时候，因为我们没有给每个格子减cnt，所以我们需要给x<strong>加上tar</strong>是我们最后得出需要查询的值$tar=cnt+x$<br>
-解决了减掉1的麻烦，还有什么麻烦呢？有没有感觉查询大于tar如果每次都遍历一次好麻烦，那么！如何快速的找到几个格子大于tar呢？我们直接开一个<em><strong>数组<code>S[i]</code>来记录累计次数&gt;=i 的单元格数量</strong>，现在我们查询只要输出<code>S[tar]</code>即可<br>
-好了，问题又来了，我们如何看是否需要<code>cnt++</code>(所有格子减1)，其实思考完上面，这个解决非常简单，只有当</em><em>所有单元格的次数都大于cnt</em>*的时候，我们才要减掉1，我们已经记录了次数数组S，所以只要$S[cnt+1]==n$ 我们就需要<code>cnt++</code></p>
-<h2 id="代码">代码</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,q;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;q;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n<span class="number">+1</span>,<span class="number">0</span>)</span></span>;      </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">S</span><span class="params">(q<span class="number">+5</span>,<span class="number">0</span>)</span></span>;    </span><br><span class="line">    S[<span class="number">0</span>]=n;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> qq=q;</span><br><span class="line">    <span class="keyword">while</span>(q--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> op,x;</span><br><span class="line">        cin&gt;&gt;op&gt;&gt;x;</span><br><span class="line">        <span class="keyword">if</span> (op==<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> c=a[x];</span><br><span class="line">            S[c<span class="number">+1</span>]++;</span><br><span class="line">            a[x]++;</span><br><span class="line">            <span class="keyword">if</span> (S[cnt<span class="number">+1</span>]==n)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (op==<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> tar=cnt+x;</span><br><span class="line">            <span class="comment">// 如果目标要求的累计次数超过了最大操作数q，直接输出0</span></span><br><span class="line">            <span class="keyword">if</span>(tar&gt;qq)</span><br><span class="line">            &#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;0\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                cout&lt;&lt;S[tar]&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="D">D</h1>
-<h2 id="题意-v2">题意</h2>
-<p>给你字符串S，问能不能重新排列 S ，让相邻的两个字符都不相同</p>
-<h2 id="思路-v2">思路</h2>
-<p>找到S中出现最多的字母的个数maxc，l是S的长度，如果最多的字母的个数大于长度的一半+1即$maxc&gt;(l+1)/2$，那么肯定不可以，直接输出No<br>
-如果可以，还需要输出排序后的S<br>
-那么现在我们需要构造S，其实只要交替的放字母就好了，这里我使用了优先队列（堆）来实现</p>
-<h2 id="代码-v2">代码</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">while</span>(n--)</span><br><span class="line">    &#123;</span><br><span class="line">        string s;</span><br><span class="line">        cin&gt;&gt;s;</span><br><span class="line">        map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; mp;</span><br><span class="line">        <span class="type">int</span> l=s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> maxc=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;l;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            mp[s[i]]++;</span><br><span class="line">            <span class="keyword">if</span>(mp[s[i]]&gt;maxc)</span><br><span class="line">            &#123;</span><br><span class="line">                maxc=mp[s[i]];</span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(maxc&lt;=(l<span class="number">+1</span>)/<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">            priority_queue&lt;pair&lt;<span class="type">int</span>, <span class="type">char</span>&gt; &gt; pq;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(mp[i+<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                    pq.<span class="built_in">push</span>(&#123;mp[i+<span class="string">&#x27;a&#x27;</span>],i+<span class="string">&#x27;a&#x27;</span>&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            string ans=<span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="function">pair&lt;<span class="type">int</span>,<span class="type">char</span>&gt; <span class="title">pre</span><span class="params">(<span class="number">-1</span>,<span class="string">&#x27; &#x27;</span>)</span></span>;</span><br><span class="line">            <span class="keyword">while</span>(!pq.<span class="built_in">empty</span>())</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">auto</span> now=pq.<span class="built_in">top</span>();</span><br><span class="line">                pq.<span class="built_in">pop</span>();</span><br><span class="line">                ans+=now.second;</span><br><span class="line">                now.first--;</span><br><span class="line">                <span class="keyword">if</span>(pre.first&gt;<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    pq.<span class="built_in">push</span>(pre);</span><br><span class="line">                &#125;</span><br><span class="line">                pre=now;</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;ans&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>题解</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ABC458</title>
-    <url>/2026/05/16/ABC458/</url>
-    <content><![CDATA[<p>今天写到E题，来写个小小题解吧！</p>
-<h1 id="A">A</h1>
-<h3 id="题意">题意</h3>
-<p>给你一个字符串s，删除前面n个和后面n个字母，然后输出</p>
-<h3 id="思路">思路</h3>
-<p>使用substr进行截取</p>
-<h3 id="代码">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin&gt;&gt;s;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    s=s.<span class="built_in">substr</span>(n);</span><br><span class="line">    <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">    s=s.<span class="built_in">substr</span>(<span class="number">0</span>,len-n);</span><br><span class="line">    cout&lt;&lt;s&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="B">B</h1>
-<h3 id="题意-v2">题意</h3>
-<p>给你一个二维数组，问每一个单元格的相邻的单元格数</p>
-<h3 id="思路-v2">思路</h3>
-<p>超出范围的不算，我们可以假设都为4，然后如果有在边上的就剪掉</p>
-<h3 id="代码-v2">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="type">int</span> n,m;</span><br><span class="line">   cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=m;++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> f=<span class="number">4</span>;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">1</span>) f--;</span><br><span class="line">            <span class="keyword">if</span>(i==n) f--;</span><br><span class="line">            <span class="keyword">if</span>(j==<span class="number">1</span>) f--;</span><br><span class="line">            <span class="keyword">if</span>(j==m) f--;</span><br><span class="line">            cout&lt;&lt;f&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="C">C</h1>
-<h3 id="题意-v3">题意</h3>
-<p>给你一个字符串s，寻找奇数并且&quot;C&quot;在中间的子串个数（不同位置的子串不同）</p>
-<h3 id="思路-v3">思路</h3>
-<p>只要找到每一个位置的”C“，并且计算在每个位置的最长的子串长度的一半，全部加起来</p>
-<h3 id="代码-v3">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin&gt;&gt;s;</span><br><span class="line">    <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">    ll cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i]==<span class="string">&#x27;C&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cnt++;<span class="comment">//单独的&quot;C&quot;也是一个子串</span></span><br><span class="line">            cnt+=<span class="built_in">min</span>(i,len-i<span class="number">-1</span>);<span class="comment">//最长的长度取决于比较短的一边</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;cnt&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="D">D</h1>
-<h3 id="题意-v4">题意</h3>
-<p>给你一个x，然后进行q次加入ai和bi构成序列，并且查询序列的中位数</p>
-<h3 id="思路-v4">思路</h3>
-<p>刚开始以为是中间数，然后觉得怎么这么简单好奇怪，然后看了看样例<br>
-噢!中位数啊，要排序的！！！<br>
-然后想着排序？？于是想到优先队列（堆），但是呢这个是取中间的，不是求最大和最小啊<br>
-那我用两个！一大一小。<br>
-l是大根堆 用来存储所有数字中<strong>较小的那一半</strong>。 <code>l.top()</code>较小那一半之中的<strong>最大值</strong>。<br>
-r是小根堆（通过使用存入负值）用来存储所有数字中<strong>较大的那一半</strong>。<code>r.top()</code> 取负数后代表较大那一半之中的<strong>最小值</strong>。<br>
-因为每次循环都会同时插入两个数。加上初始的 1 个数，总数字个数序列永远是奇数。所以中位数是<code>l.top()</code></p>
-<h3 id="代码-v4">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">priority_queue&lt;<span class="type">int</span>&gt; l,r;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l.<span class="built_in">empty</span>()||x&lt;=l.<span class="built_in">top</span>())</span><br><span class="line">    &#123;</span><br><span class="line">	    <span class="comment">// 比左边最大值还小，说明属于较小的一半</span></span><br><span class="line">        l.<span class="built_in">push</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">	    <span class="comment">// 比左边最大值大，说明属于较大的一半（存负数变小根堆）</span></span><br><span class="line">        r.<span class="built_in">push</span>(-x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//调整两个堆的大小，左堆大小=右堆大小+1(保证l.top()是答案)</span></span><br><span class="line">    <span class="keyword">if</span>(l.<span class="built_in">size</span>()&gt;r.<span class="built_in">size</span>()<span class="number">+1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        r.<span class="built_in">push</span>(-l.<span class="built_in">top</span>());</span><br><span class="line">        l.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(r.<span class="built_in">size</span>()&gt;l.<span class="built_in">size</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        l.<span class="built_in">push</span>(-r.<span class="built_in">top</span>());</span><br><span class="line">        r.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    cin&gt;&gt;x;</span><br><span class="line">    <span class="built_in">insert</span>(x);</span><br><span class="line">    <span class="type">int</span> q;</span><br><span class="line">    cin&gt;&gt;q;</span><br><span class="line">    <span class="keyword">while</span>(q--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> a,b;</span><br><span class="line">        cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">        <span class="built_in">insert</span>(a);</span><br><span class="line">        <span class="built_in">insert</span>(b);</span><br><span class="line">        cout&lt;&lt;l.<span class="built_in">top</span>()&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="E">E</h1>
-<h3 id="题意-v5">题意</h3>
-<p>序列A满足有x1个1，x2个2，x3个3，并且 ∣ai+1​−ai​∣≤1 <br>
-问这样的A的个数，答案模998244353</p>
-<h3 id="思路-v5">思路</h3>
-<p>第一反应动态规划，正准备想转移状态，看了一下x1,x2,x3的范围，1~1e6,好吧，动态规划pass~~<br>
-重新开始看题目条件， ∣ai+1​−ai​∣≤1 ，那么我们推出 1和 3 绝对不能相邻，中间必须有2来隔开<br>
-那么！我们可以将2看成隔板，将1和3插入其中<br>
-将x2个 2 划分出的 x2+1 个空隙，<strong>每一个空隙要么全放 1（且至少放一个），要么全放 3（且至少放一个），要么都不放</strong>。<br>
-假设一共选了 i 个空隙来放 1，选了 j 个空隙来放 3。</p>
-<ol>
-<li><strong>选择空隙的位置</strong>：<br>
-从 x2+1个空隙中选出 i 个放 $1$，再从剩下的空隙中选出j个放 $3$,方案数为：<br>
-$\binom{x2+1}{i} \cdot \binom{x2+1-i}{j}$</li>
-<li><strong>分配元素的数量</strong>：</li>
-</ol>
-<ul>
-<li>将 $x1$ 个相同的 $1$ 放入 $i$ 个<strong>非空</strong>的空隙中，方案数为：$\binom{x1-1}{i-1}$</li>
-<li>将 $x3$ 个相同的 $3$ 放入 $j$ 个<strong>非空</strong>的空隙中，方案数为：$\binom{x3-1}{j-1}$<br>
-所以，对于i和 j，合法的排列数为：</li>
-</ul>
-<p>$$f(i, j) = \binom{x2+1}{i} \binom{x2+1-i}{j} \binom{x1-1}{i-1} \binom{x3-1}{j-1}$$</p>
-<p>然后我们对每一个i和j进行计算，但是这样时间就是1e12，oh no!TLE!<br>
-我们要在进行优化<br>
-当 $i$ 固定时，我们需要对 $j$ 进行求和：</p>
-<p>$$\sum_{j=1}^{x3} \binom{x2+1}{i} \binom{x2+1-i}{j} \binom{x1-1}{i-1} \binom{x3-1}{j-1}$$</p>
-<p>将与 $j$ 无关的项提出来：</p>
-<p>$$\binom{x2+1}{i} \binom{x1-1}{i-1} \sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{j-1}$$</p>
-<p>利用恒等式 $\binom{x3-1}{j-1} = \binom{x3-1}{x3-j}$，后面的求和项变为：</p>
-<p>$$\sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{x3-j}$$</p>
-<p>根据范德蒙德恒等式，这个求和等于从两堆物品（一堆 x2+1-i 个，另一堆 x3-1个）中一共选出 j + (x3-j) = x3 个物品的方案数<br>
-即：</p>
-<p>$$\sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{x3-j} = \binom{x2+x3-i}{x3}$$</p>
-<p>然后我们惊奇的发现 j 没掉了！<br>
-注意：i的个数不能大于x1,也不能大于可用的空隙x2+1<br>
-那么我们可以推出总方案数可以表示为：<br>
-$$ans = \sum_{i=1}^{\min(x1, x2+1)} \binom{x2+1}{i} \binom{x1-1}{i-1} \binom{x2+x3-i}{x3} \pmod{998244353}$$<br>
-代码上面<br>
-我们需要求组合数C，我们对阶乘 fact[]和逆元阶乘 invfact[]进行预处理<br>
-运用费马小定理和快速幂来求出最后一个invfact[N-1],然后倒推剩下的invfact[]</p>
-<h3 id="代码-v5">代码</h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">3e6</span><span class="number">+5</span>,mod=<span class="number">998244353</span>;</span><br><span class="line">ll fact[N],invfact[N];</span><br><span class="line"><span class="comment">//快速幂</span></span><br><span class="line"><span class="function">ll <span class="title">pw</span><span class="params">(ll a,ll b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ll res=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>)</span><br><span class="line">            res=(res*a)%mod;</span><br><span class="line">        a=(a*a)%mod;</span><br><span class="line">        b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pre</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fact[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    invfact[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;N;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        fact[i]=(fact[i<span class="number">-1</span>]*i)%mod;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//费马小定理</span></span><br><span class="line">    invfact[N<span class="number">-1</span>]=<span class="built_in">pw</span>(fact[N<span class="number">-1</span>],mod<span class="number">-2</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=N<span class="number">-2</span>;i&gt;=<span class="number">1</span>;--i)</span><br><span class="line">    &#123;</span><br><span class="line">        invfact[i]=(invfact[i<span class="number">+1</span>]*(i<span class="number">+1</span>))%mod;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">C</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(k&lt;<span class="number">0</span>||k&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> fact[n]*invfact[k]%mod*invfact[n-k]%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">pre</span>();</span><br><span class="line">    <span class="type">int</span> x1,x2,x3;</span><br><span class="line">    cin&gt;&gt;x1&gt;&gt;x2&gt;&gt;x3;</span><br><span class="line">    ll ans=<span class="number">0</span>;</span><br><span class="line">    <span class="comment">//i的个数不能大于x1,也不能大于可用的空隙x2+1</span></span><br><span class="line">    <span class="type">int</span> n=<span class="built_in">min</span>(x1,x2<span class="number">+1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        ll sum1=<span class="built_in">C</span>(x2<span class="number">+1</span>,i)%mod;</span><br><span class="line">        ll sum2=<span class="built_in">C</span>(x1<span class="number">-1</span>,i<span class="number">-1</span>)%mod;</span><br><span class="line">        ll sum3=<span class="built_in">C</span>(x3+x2-i,x3)%mod;</span><br><span class="line">        ll now=((sum1*sum2)%mod*sum3)%mod;</span><br><span class="line">        ans=(ans+now)%mod;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>题解</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ABC457</title>
     <url>/2026/05/12/ABC457/</url>
     <content><![CDATA[<p>比赛时写到D题，比赛后补完了，记录一下第一次补完，以及第一次写题解</p>
@@ -241,8 +118,131 @@ f[i][j]+=f[i+1][j]   (对应2)<br>
         <category>题解</category>
       </categories>
       <tags>
-        <tag>C++</tag>
         <tag>算法</tag>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ABC458</title>
+    <url>/2026/05/16/ABC458/</url>
+    <content><![CDATA[<p>今天写到E题，来写个小小题解吧！</p>
+<h1 id="A">A</h1>
+<h3 id="题意">题意</h3>
+<p>给你一个字符串s，删除前面n个和后面n个字母，然后输出</p>
+<h3 id="思路">思路</h3>
+<p>使用substr进行截取</p>
+<h3 id="代码">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin&gt;&gt;s;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    s=s.<span class="built_in">substr</span>(n);</span><br><span class="line">    <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">    s=s.<span class="built_in">substr</span>(<span class="number">0</span>,len-n);</span><br><span class="line">    cout&lt;&lt;s&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="B">B</h1>
+<h3 id="题意-v2">题意</h3>
+<p>给你一个二维数组，问每一个单元格的相邻的单元格数</p>
+<h3 id="思路-v2">思路</h3>
+<p>超出范围的不算，我们可以假设都为4，然后如果有在边上的就剪掉</p>
+<h3 id="代码-v2">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="type">int</span> n,m;</span><br><span class="line">   cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=m;++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> f=<span class="number">4</span>;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">1</span>) f--;</span><br><span class="line">            <span class="keyword">if</span>(i==n) f--;</span><br><span class="line">            <span class="keyword">if</span>(j==<span class="number">1</span>) f--;</span><br><span class="line">            <span class="keyword">if</span>(j==m) f--;</span><br><span class="line">            cout&lt;&lt;f&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="C">C</h1>
+<h3 id="题意-v3">题意</h3>
+<p>给你一个字符串s，寻找奇数并且&quot;C&quot;在中间的子串个数（不同位置的子串不同）</p>
+<h3 id="思路-v3">思路</h3>
+<p>只要找到每一个位置的”C“，并且计算在每个位置的最长的子串长度的一半，全部加起来</p>
+<h3 id="代码-v3">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin&gt;&gt;s;</span><br><span class="line">    <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">    ll cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i]==<span class="string">&#x27;C&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cnt++;<span class="comment">//单独的&quot;C&quot;也是一个子串</span></span><br><span class="line">            cnt+=<span class="built_in">min</span>(i,len-i<span class="number">-1</span>);<span class="comment">//最长的长度取决于比较短的一边</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;cnt&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="D">D</h1>
+<h3 id="题意-v4">题意</h3>
+<p>给你一个x，然后进行q次加入ai和bi构成序列，并且查询序列的中位数</p>
+<h3 id="思路-v4">思路</h3>
+<p>刚开始以为是中间数，然后觉得怎么这么简单好奇怪，然后看了看样例<br>
+噢!中位数啊，要排序的！！！<br>
+然后想着排序？？于是想到优先队列（堆），但是呢这个是取中间的，不是求最大和最小啊<br>
+那我用两个！一大一小。<br>
+l是大根堆 用来存储所有数字中<strong>较小的那一半</strong>。 <code>l.top()</code>较小那一半之中的<strong>最大值</strong>。<br>
+r是小根堆（通过使用存入负值）用来存储所有数字中<strong>较大的那一半</strong>。<code>r.top()</code> 取负数后代表较大那一半之中的<strong>最小值</strong>。<br>
+因为每次循环都会同时插入两个数。加上初始的 1 个数，总数字个数序列永远是奇数。所以中位数是<code>l.top()</code></p>
+<h3 id="代码-v4">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">priority_queue&lt;<span class="type">int</span>&gt; l,r;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l.<span class="built_in">empty</span>()||x&lt;=l.<span class="built_in">top</span>())</span><br><span class="line">    &#123;</span><br><span class="line">	    <span class="comment">// 比左边最大值还小，说明属于较小的一半</span></span><br><span class="line">        l.<span class="built_in">push</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">	    <span class="comment">// 比左边最大值大，说明属于较大的一半（存负数变小根堆）</span></span><br><span class="line">        r.<span class="built_in">push</span>(-x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//调整两个堆的大小，左堆大小=右堆大小+1(保证l.top()是答案)</span></span><br><span class="line">    <span class="keyword">if</span>(l.<span class="built_in">size</span>()&gt;r.<span class="built_in">size</span>()<span class="number">+1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        r.<span class="built_in">push</span>(-l.<span class="built_in">top</span>());</span><br><span class="line">        l.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(r.<span class="built_in">size</span>()&gt;l.<span class="built_in">size</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        l.<span class="built_in">push</span>(-r.<span class="built_in">top</span>());</span><br><span class="line">        r.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    cin&gt;&gt;x;</span><br><span class="line">    <span class="built_in">insert</span>(x);</span><br><span class="line">    <span class="type">int</span> q;</span><br><span class="line">    cin&gt;&gt;q;</span><br><span class="line">    <span class="keyword">while</span>(q--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> a,b;</span><br><span class="line">        cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">        <span class="built_in">insert</span>(a);</span><br><span class="line">        <span class="built_in">insert</span>(b);</span><br><span class="line">        cout&lt;&lt;l.<span class="built_in">top</span>()&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="E">E</h1>
+<h3 id="题意-v5">题意</h3>
+<p>序列A满足有x1个1，x2个2，x3个3，并且 ∣ai+1​−ai​∣≤1 <br>
+问这样的A的个数，答案模998244353</p>
+<h3 id="思路-v5">思路</h3>
+<p>第一反应动态规划，正准备想转移状态，看了一下x1,x2,x3的范围，1~1e6,好吧，动态规划pass~~<br>
+重新开始看题目条件， ∣ai+1​−ai​∣≤1 ，那么我们推出 1和 3 绝对不能相邻，中间必须有2来隔开<br>
+那么！我们可以将2看成隔板，将1和3插入其中<br>
+将x2个 2 划分出的 x2+1 个空隙，<strong>每一个空隙要么全放 1（且至少放一个），要么全放 3（且至少放一个），要么都不放</strong>。<br>
+假设一共选了 i 个空隙来放 1，选了 j 个空隙来放 3。</p>
+<ol>
+<li><strong>选择空隙的位置</strong>：<br>
+从 x2+1个空隙中选出 i 个放 $1$，再从剩下的空隙中选出j个放 $3$,方案数为：<br>
+$\binom{x2+1}{i} \cdot \binom{x2+1-i}{j}$</li>
+<li><strong>分配元素的数量</strong>：</li>
+</ol>
+<ul>
+<li>将 $x1$ 个相同的 $1$ 放入 $i$ 个<strong>非空</strong>的空隙中，方案数为：$\binom{x1-1}{i-1}$</li>
+<li>将 $x3$ 个相同的 $3$ 放入 $j$ 个<strong>非空</strong>的空隙中，方案数为：$\binom{x3-1}{j-1}$<br>
+所以，对于i和 j，合法的排列数为：</li>
+</ul>
+<p>$$f(i, j) = \binom{x2+1}{i} \binom{x2+1-i}{j} \binom{x1-1}{i-1} \binom{x3-1}{j-1}$$</p>
+<p>然后我们对每一个i和j进行计算，但是这样时间就是1e12，oh no!TLE!<br>
+我们要在进行优化<br>
+当 $i$ 固定时，我们需要对 $j$ 进行求和：</p>
+<p>$$\sum_{j=1}^{x3} \binom{x2+1}{i} \binom{x2+1-i}{j} \binom{x1-1}{i-1} \binom{x3-1}{j-1}$$</p>
+<p>将与 $j$ 无关的项提出来：</p>
+<p>$$\binom{x2+1}{i} \binom{x1-1}{i-1} \sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{j-1}$$</p>
+<p>利用恒等式 $\binom{x3-1}{j-1} = \binom{x3-1}{x3-j}$，后面的求和项变为：</p>
+<p>$$\sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{x3-j}$$</p>
+<p>根据范德蒙德恒等式，这个求和等于从两堆物品（一堆 x2+1-i 个，另一堆 x3-1个）中一共选出 j + (x3-j) = x3 个物品的方案数<br>
+即：</p>
+<p>$$\sum_{j=1}^{x3} \binom{x2+1-i}{j} \binom{x3-1}{x3-j} = \binom{x2+x3-i}{x3}$$</p>
+<p>然后我们惊奇的发现 j 没掉了！<br>
+注意：i的个数不能大于x1,也不能大于可用的空隙x2+1<br>
+那么我们可以推出总方案数可以表示为：<br>
+$$ans = \sum_{i=1}^{\min(x1, x2+1)} \binom{x2+1}{i} \binom{x1-1}{i-1} \binom{x2+x3-i}{x3} \pmod{998244353}$$<br>
+代码上面<br>
+我们需要求组合数C，我们对阶乘 fact[]和逆元阶乘 invfact[]进行预处理<br>
+运用费马小定理和快速幂来求出最后一个invfact[N-1],然后倒推剩下的invfact[]</p>
+<h3 id="代码-v5">代码</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">3e6</span><span class="number">+5</span>,mod=<span class="number">998244353</span>;</span><br><span class="line">ll fact[N],invfact[N];</span><br><span class="line"><span class="comment">//快速幂</span></span><br><span class="line"><span class="function">ll <span class="title">pw</span><span class="params">(ll a,ll b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ll res=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>)</span><br><span class="line">            res=(res*a)%mod;</span><br><span class="line">        a=(a*a)%mod;</span><br><span class="line">        b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pre</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fact[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    invfact[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;N;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        fact[i]=(fact[i<span class="number">-1</span>]*i)%mod;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//费马小定理</span></span><br><span class="line">    invfact[N<span class="number">-1</span>]=<span class="built_in">pw</span>(fact[N<span class="number">-1</span>],mod<span class="number">-2</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=N<span class="number">-2</span>;i&gt;=<span class="number">1</span>;--i)</span><br><span class="line">    &#123;</span><br><span class="line">        invfact[i]=(invfact[i<span class="number">+1</span>]*(i<span class="number">+1</span>))%mod;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">C</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(k&lt;<span class="number">0</span>||k&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> fact[n]*invfact[k]%mod*invfact[n-k]%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">pre</span>();</span><br><span class="line">    <span class="type">int</span> x1,x2,x3;</span><br><span class="line">    cin&gt;&gt;x1&gt;&gt;x2&gt;&gt;x3;</span><br><span class="line">    ll ans=<span class="number">0</span>;</span><br><span class="line">    <span class="comment">//i的个数不能大于x1,也不能大于可用的空隙x2+1</span></span><br><span class="line">    <span class="type">int</span> n=<span class="built_in">min</span>(x1,x2<span class="number">+1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        ll sum1=<span class="built_in">C</span>(x2<span class="number">+1</span>,i)%mod;</span><br><span class="line">        ll sum2=<span class="built_in">C</span>(x1<span class="number">-1</span>,i<span class="number">-1</span>)%mod;</span><br><span class="line">        ll sum3=<span class="built_in">C</span>(x3+x2-i,x3)%mod;</span><br><span class="line">        ll now=((sum1*sum2)%mod*sum3)%mod;</span><br><span class="line">        ans=(ans+now)%mod;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ABC459</title>
+    <url>/2026/05/23/ABC459/</url>
+    <content><![CDATA[<p>今天只写到D题，但是我还是来写题解了~<br>
+A和B感觉没什么好写的，略了。</p>
+<h1 id="C">C</h1>
+<h2 id="题意">题意</h2>
+<p>给你N个格子，进行Q次操作<br>
+1.在第x个格子里面加1，如果每个格子都大于1，每个格子都需要减去1<br>
+2.查询有几个格子大于x</p>
+<h2 id="思路">思路</h2>
+<p>刚开始想着直接暴力，但是一看范围，嗯100%超时<br>
+每次所有格子大于1的时候都减掉1，如果暴力遍历所有格子好麻烦，那么！我们干脆不要减了，<strong>记录下需要减的次数cnt</strong><br>
+在查询x的时候，因为我们没有给每个格子减cnt，所以我们需要给x<strong>加上tar</strong>是我们最后得出需要查询的值$tar=cnt+x$<br>
+解决了减掉1的麻烦，还有什么麻烦呢？有没有感觉查询大于tar如果每次都遍历一次好麻烦，那么！如何快速的找到几个格子大于tar呢？我们直接开一个<em><strong>数组<code>S[i]</code>来记录累计次数&gt;=i 的单元格数量</strong>，现在我们查询只要输出<code>S[tar]</code>即可<br>
+好了，问题又来了，我们如何看是否需要<code>cnt++</code>(所有格子减1)，其实思考完上面，这个解决非常简单，只有当</em><em>所有单元格的次数都大于cnt</em>*的时候，我们才要减掉1，我们已经记录了次数数组S，所以只要$S[cnt+1]==n$ 我们就需要<code>cnt++</code></p>
+<h2 id="代码">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,q;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;q;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n<span class="number">+1</span>,<span class="number">0</span>)</span></span>;      </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">S</span><span class="params">(q<span class="number">+5</span>,<span class="number">0</span>)</span></span>;    </span><br><span class="line">    S[<span class="number">0</span>]=n;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> qq=q;</span><br><span class="line">    <span class="keyword">while</span>(q--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> op,x;</span><br><span class="line">        cin&gt;&gt;op&gt;&gt;x;</span><br><span class="line">        <span class="keyword">if</span> (op==<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> c=a[x];</span><br><span class="line">            S[c<span class="number">+1</span>]++;</span><br><span class="line">            a[x]++;</span><br><span class="line">            <span class="keyword">if</span> (S[cnt<span class="number">+1</span>]==n)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (op==<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> tar=cnt+x;</span><br><span class="line">            <span class="comment">// 如果目标要求的累计次数超过了最大操作数q，直接输出0</span></span><br><span class="line">            <span class="keyword">if</span>(tar&gt;qq)</span><br><span class="line">            &#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;0\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                cout&lt;&lt;S[tar]&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="D">D</h1>
+<h2 id="题意-v2">题意</h2>
+<p>给你字符串S，问能不能重新排列 S ，让相邻的两个字符都不相同</p>
+<h2 id="思路-v2">思路</h2>
+<p>找到S中出现最多的字母的个数maxc，l是S的长度，如果最多的字母的个数大于长度的一半+1即$maxc&gt;(l+1)/2$，那么肯定不可以，直接输出No<br>
+如果可以，还需要输出排序后的S<br>
+那么现在我们需要构造S，其实只要交替的放字母就好了，这里我使用了优先队列（堆）来实现</p>
+<h2 id="代码-v2">代码</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">while</span>(n--)</span><br><span class="line">    &#123;</span><br><span class="line">        string s;</span><br><span class="line">        cin&gt;&gt;s;</span><br><span class="line">        map&lt;<span class="type">char</span>,<span class="type">int</span>&gt; mp;</span><br><span class="line">        <span class="type">int</span> l=s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> maxc=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;l;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            mp[s[i]]++;</span><br><span class="line">            <span class="keyword">if</span>(mp[s[i]]&gt;maxc)</span><br><span class="line">            &#123;</span><br><span class="line">                maxc=mp[s[i]];</span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(maxc&lt;=(l<span class="number">+1</span>)/<span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;Yes\n&quot;</span>;</span><br><span class="line">            priority_queue&lt;pair&lt;<span class="type">int</span>, <span class="type">char</span>&gt; &gt; pq;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(mp[i+<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                    pq.<span class="built_in">push</span>(&#123;mp[i+<span class="string">&#x27;a&#x27;</span>],i+<span class="string">&#x27;a&#x27;</span>&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            string ans=<span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="function">pair&lt;<span class="type">int</span>,<span class="type">char</span>&gt; <span class="title">pre</span><span class="params">(<span class="number">-1</span>,<span class="string">&#x27; &#x27;</span>)</span></span>;</span><br><span class="line">            <span class="keyword">while</span>(!pq.<span class="built_in">empty</span>())</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">auto</span> now=pq.<span class="built_in">top</span>();</span><br><span class="line">                pq.<span class="built_in">pop</span>();</span><br><span class="line">                ans+=now.second;</span><br><span class="line">                now.first--;</span><br><span class="line">                <span class="keyword">if</span>(pre.first&gt;<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    pq.<span class="built_in">push</span>(pre);</span><br><span class="line">                &#125;</span><br><span class="line">                pre=now;</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;ans&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -752,8 +752,8 @@ dfs2(root, root);
         <category>算法</category>
       </categories>
       <tags>
-        <tag>C++</tag>
         <tag>算法</tag>
+        <tag>C++</tag>
         <tag>图</tag>
       </tags>
   </entry>
@@ -1542,6 +1542,105 @@ ok，我现在来详细讲解一下这段 <code>get_path</code> 函数。</p>
       <tags>
         <tag>算法</tag>
         <tag>图</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>洛谷P5588 小猪佩奇爬树</title>
+    <url>/2026/08/26/%E6%B4%9B%E8%B0%B7P5588%20%E5%B0%8F%E7%8C%AA%E4%BD%A9%E5%A5%87%E7%88%AC%E6%A0%91/</url>
+    <content><![CDATA[<p><strong><a href="https://www.luogu.com.cn/problem/P5588">P5588 小猪佩奇爬树 - 洛谷</a></strong></p>
+<h2 id="题意">题意</h2>
+<p>给定一棵 $n$ 个节点的树，每个节点有一种颜色，颜色编号在 $1 \sim n$ 之间。对于每一种颜色 $c$，问树上有多少条<strong>简单路径</strong>（即树上两点之间的路径）能够覆盖所有颜色为 $c$ 的节点。换句话说，对于每种颜色，我们需要统计有多少个无序点对 $(u,v)$，使得 $u$ 到 $v$ 的路径上包含了该颜色的全部节点。</p>
+<hr>
+<h2 id="思路">思路</h2>
+<p>本题的核心是：<strong>对于每种颜色，判断其所有节点能否被同一条树上的简单路径覆盖，并统计这样的路径数量</strong>。</p>
+<p>一个关键性质：<strong>树上的任意两点确定一条路径，而一条路径可以覆盖若干个点，当且仅当这些点在一条“链”上（即它们可以被同一条路径包含）。</strong><br>
+因此，问题转化为：</p>
+<blockquote>
+<p>对于颜色 $c$，判断它的所有节点是否位于同一条树上路径上，如果是，则统计有多少条路径能包含这条“最小覆盖路径”。</p>
+</blockquote>
+<p>树上两点确定一条简单路径。对于一种颜色 $c$，设其所有节点构成的集合为 $S_c$。若存在一条路径覆盖 $S_c$ 中所有节点，则 $S_c$ 中<strong>深度最大的点</strong>一定是该路径的某个端点。以此为突破口，我们可以分类讨论。</p>
+<p>由于 $|S_c|$ 的大小不同，统计方式完全不同，因此我们按 $|S_c|$ 分类：：</p>
+<ol>
+<li>
+<p><strong>$|S_c| = 0$</strong>：没有该颜色的节点，任意路径都满足条件，答案为 $\frac{n(n-1)}{2}$。</p>
+</li>
+<li>
+<p><strong>$|S_c| = 1$</strong>：只有一个该颜色的节点，那么所有经过该点的路径都满足条件。我们只需统计经过该点的路径数。</p>
+</li>
+<li>
+<p><strong>$|S_c| \ge 2$</strong>：这是最复杂的情况。我们需要判断这些点是否共线（在同一条路径上），并统计包含这条路径的路径数量。</p>
+</li>
+</ol>
+<hr>
+<h2 id="分块代码">分块代码</h2>
+<p>我结合我的代码来解释一下为什么这么写</p>
+<p>用 <code>vector&lt;int&gt; co[i]</code> 存储颜色 $i$ 的所有节点。<br>
+由于颜色编号范围是 $1 \sim n$，可以直接开大小为 $n+1$ 的 vector 数组。</p>
+<h3 id="情况一：co-i-size-0">情况一：<code>co[i].size() == 0</code></h3>
+<p>直接输出 $\frac{n(n-1)}{2}$。</p>
+<h3 id="情况二：co-i-size-1">情况二：<code>co[i].size() == 1</code></h3>
+<p>设该颜色唯一的节点为 $u$，我们需要统计<strong>所有经过 $u$ 的路径数量</strong>。</p>
+<p>对于树上任意一条经过 $u$ 的路径，其两个端点可以来自：</p>
+<ul>
+<li>$u$ 的不同子树之间（两两组合）</li>
+<li>$u$ 的某个子树与 $u$ 的父节点方向（即 $u$ 子树外部）之间</li>
+</ul>
+<p>设 $u$ 的各个儿子子树大小为 $s_1, s_2, \dots, s_k$，$u$ 外部（父节点方向）的大小为 $n - siz[u]$。</p>
+<p>则经过 $u$ 的路径数为：</p>
+<ul>
+<li>不同儿子子树之间两两组合：$\sum_{i&lt;j} s_i \cdot s_j$</li>
+<li>每个儿子子树与外部组合：$\sum_i s_i \cdot (n - siz[u])$</li>
+<li>$u$ 与外部任意点组合：$n - siz[u]$</li>
+<li>$u$ 与子树内任意点组合：$siz[u] - 1$</li>
+</ul>
+<p>代码中的实现方式为：遍历 $u$ 的每个儿子 $v$（即 $v \ne up[u][0]$），维护已遍历子树的累计大小 <code>sum</code>，累加 <code>siz[v] * (siz[u] - sum)</code>，最后再加上 <code>siz[u] * (n - siz[u])</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (co[i].<span class="built_in">size</span>() == <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="type">int</span> u = co[i][<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>, sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> v : adj[u]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v == up[u][<span class="number">0</span>]) <span class="keyword">continue</span>;</span><br><span class="line">        sum += siz[v];</span><br><span class="line">        ans += siz[v] * (siz[u] - sum);</span><br><span class="line">    &#125;</span><br><span class="line">    ans += siz[u] * (n - siz[u]);</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="情况三：co-i-size-2">情况三：<code>co[i].size() &gt;= 2</code></h3>
+<p>对于 $|S_c| \ge 2$，我们如何高效判断共线并统计呢？</p>
+<p>若这些点共线，则<strong>深度最大的点一定是路径的一个端点</strong>。设这个点为 $x$。<br>
+另一个端点必然是所有点中，<strong>不是 $x$ 的祖先且深度最大的那个点</strong>（若所有点都是 $x$ 的祖先，则另一个端点是深度最小的点）。<br>
+因此，我们可以按深度降序排序，然后：</p>
+<ul>
+<li>第一个点 $x$（深度最大）。</li>
+<li>依次检查后面的点是否是 $x$ 的祖先，第一个不是 $x$ 祖先的点 $y$ 就是另一个端点（如果不存在，说明所有点都在一条以 $x$ 为一端的祖先链上）。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; aa = co[i];</span><br><span class="line"><span class="built_in">sort</span>(aa.<span class="built_in">begin</span>(), aa.<span class="built_in">end</span>(), cmp);  <span class="comment">// 按深度降序</span></span><br><span class="line"><span class="type">int</span> hh = <span class="number">-1</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; aa.<span class="built_in">size</span>(); ++j) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">getlca</span>(aa[<span class="number">0</span>], aa[j]) != aa[j]) &#123;  <span class="comment">// aa[j] 不是 aa[0] 的祖先</span></span><br><span class="line">        hh = j;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们就找到了候选路径的两个端点 $x$ 和 $y$。<br>
+接下来验证 <strong>其余所有点是否都在 $x \to y$ 的路径上</strong>。</p>
+<h4 id="子情况-A：所有节点在一条祖先链上（hh-1）">子情况 A：所有节点在一条祖先链上（<code>hh == -1</code>）</h4>
+<p>如果是，则说明这些点共线，且 $x \to y$ 就是包含它们的最短路径（端点可能可以扩展）。</p>
+<p>此时所有节点都是 $x$ 的祖先，路径的一端是 $x$（深度最大），另一端是深度最小的节点（即最浅的祖先）。</p>
+<p>设深度最小的节点为 $r = aa.back()$，路径为 $x \to r$。为了统计覆盖该路径的路径数量，我们需要找到 $r$ 的哪个儿子子树包含了 $x$。</p>
+<p>从 $x$ 向上跳，找到 $r$ 的直接儿子 <code>son</code>（即 $x$ 到 $r$ 路径上 $r$ 的下一个节点）：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> son = aa[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">while</span> (up[son][<span class="number">0</span>] != aa.<span class="built_in">back</span>()) son = up[son][<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+<p>路径 $x \to r$ 将树分成了两部分：</p>
+<ul>
+<li>以 $x$ 为根的子树：大小为 $siz[x]$</li>
+<li>以 $son$ 为根的子树<strong>之外</strong>的部分：大小为 $n - siz[son]$</li>
+</ul>
+<p>任意选择 $x$ 子树内的一个点作为路径一端，选择 $son$ 子树外的一个点作为另一端，路径都会经过 $x \to r$ 这一段。因此答案为：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cout &lt;&lt; (ll)siz[aa[<span class="number">0</span>]] * (n - siz[son]) &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="子情况-B：存在两个端点（hh-1）">子情况 B：存在两个端点（<code>hh != -1</code>）</h4>
+<p>此时 $x = aa[0]$ 和 $y = aa[hh]$ 就是路径的两个端点。我们需要验证 <strong>所有其他节点是否都在这条 $x \to y$ 的路径上</strong>。</p>
+<p>设 $l = getlca(x, y)$。对于任意其他节点 $z$：</p>
+<ul>
+<li>如果 $z$ 在 $x$ 到 $l$ 的路径上，则 $z$ 是 $x$ 的祖先（即 $getlca(z, x) = z$），且 $dep[z] \ge dep[l]$。</li>
+<li>如果 $z$ 在 $y$ 到 $l$ 的路径上，同理。</li>
+</ul>
+<p>代码中从 <code>hh + 1</code> 开始检查所有剩余节点：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> lca = <span class="built_in">getlca</span>(aa[<span class="number">0</span>], aa[hh]);</span><br><span class="line"><span class="type">int</span> ff = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> j = hh + <span class="number">1</span>; j &lt; aa.<span class="built_in">size</span>(); ++j) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">getlca</span>(aa[j], aa[<span class="number">0</span>]) == aa[j] &amp;&amp; dep[aa[j]] &gt;= dep[lca]) <span class="keyword">continue</span>;</span><br><span class="line">    ff = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果所有节点都在路径上（<code>ff == 1</code>），则答案为 $siz[x] \times siz[y]$；否则答案为 $0$。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!ff) cout &lt;&lt; <span class="string">&quot;0\n&quot;</span>;</span><br><span class="line"><span class="keyword">else</span> cout &lt;&lt; (ll)siz[aa[<span class="number">0</span>]] * siz[aa[hh]] &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="完整代码">完整代码</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">1e6</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; adj[maxn];</span><br><span class="line"><span class="type">int</span> a[maxn];</span><br><span class="line"><span class="type">int</span> up[maxn][<span class="number">25</span>],dep[maxn],siz[maxn];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; co[maxn];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> p)</span></span>&#123;</span><br><span class="line">    siz[u]=<span class="number">1</span>;</span><br><span class="line">    dep[u]=dep[p]<span class="number">+1</span>;up[u][<span class="number">0</span>]=p;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;<span class="number">20</span>;++i)&#123;</span><br><span class="line">        <span class="type">int</span> mid=up[u][i<span class="number">-1</span>];</span><br><span class="line">        up[u][i]=up[mid][i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> v:adj[u])&#123;</span><br><span class="line">        <span class="keyword">if</span>(v==p) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(v,u);</span><br><span class="line">        siz[u]+=siz[v];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getlca</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(dep[u]&lt;dep[v]) <span class="built_in">swap</span>(u,v);</span><br><span class="line">    <span class="type">int</span> diff=dep[u]-dep[v];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">19</span>;i&gt;=<span class="number">0</span>;--i)&#123;</span><br><span class="line">        <span class="keyword">if</span>((diff&gt;&gt;i)&amp;<span class="number">1</span>) u=up[u][i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(u==v) <span class="keyword">return</span> u;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">19</span>;i&gt;=<span class="number">0</span>;--i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(up[u][i]==up[v][i]) <span class="keyword">continue</span>;</span><br><span class="line">        u=up[u][i],v=up[v][i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> up[u][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> dep[x]&gt;dep[y];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i) &#123;</span><br><span class="line">        cin&gt;&gt;a[i];</span><br><span class="line">        co[a[i]].<span class="built_in">push_back</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;++i)&#123;</span><br><span class="line">        <span class="type">int</span> u,v;</span><br><span class="line">        cin&gt;&gt;u&gt;&gt;v;</span><br><span class="line">        adj[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">        adj[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">dfs</span>(<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(co[i].<span class="built_in">size</span>()==<span class="number">0</span>)&#123;</span><br><span class="line">            cout&lt;&lt;(ll)n*(n<span class="number">-1</span>)/<span class="number">2</span>&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(co[i].<span class="built_in">size</span>()==<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="type">int</span> u=co[i][<span class="number">0</span>];</span><br><span class="line">            <span class="type">int</span> ans=<span class="number">0</span>,sum=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> v:adj[u])&#123;</span><br><span class="line">                <span class="keyword">if</span>(v==up[u][<span class="number">0</span>]) <span class="keyword">continue</span>;</span><br><span class="line">                sum+=siz[v];</span><br><span class="line">                ans+=siz[v]*(siz[u]-sum);</span><br><span class="line">            &#125;</span><br><span class="line">            ans+=siz[u]*(n-siz[u]);</span><br><span class="line">            cout&lt;&lt;ans&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            vector&lt;<span class="type">int</span>&gt; aa=co[i];</span><br><span class="line">            <span class="built_in">sort</span>(aa.<span class="built_in">begin</span>(),aa.<span class="built_in">end</span>(),cmp);</span><br><span class="line">            <span class="type">int</span> hh=<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;aa.<span class="built_in">size</span>();++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="built_in">getlca</span>(aa[<span class="number">0</span>],aa[j])!=aa[j])</span><br><span class="line">                &#123;</span><br><span class="line">                    hh=j;<span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(hh==<span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="type">int</span> son=aa[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">while</span>(up[son][<span class="number">0</span>]!=aa.<span class="built_in">back</span>()) son=up[son][<span class="number">0</span>];</span><br><span class="line">                cout&lt;&lt;(ll)siz[aa[<span class="number">0</span>]]*(n-siz[son])&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="type">int</span> lca=<span class="built_in">getlca</span>(aa[<span class="number">0</span>],aa[hh]);</span><br><span class="line">                <span class="type">int</span> ff=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> j=hh<span class="number">+1</span>;j&lt;aa.<span class="built_in">size</span>();++j)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(<span class="built_in">getlca</span>(aa[j],aa[<span class="number">0</span>])==aa[j]&amp;&amp;dep[aa[j]]&gt;=dep[lca]) <span class="keyword">continue</span>;</span><br><span class="line">                    ff=<span class="number">0</span>;<span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(!ff) cout&lt;&lt;<span class="string">&quot;0\n&quot;</span>;</span><br><span class="line">                <span class="keyword">else</span> cout&lt;&lt;(ll)siz[aa[<span class="number">0</span>]]*siz[aa[hh]]&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="type">int</span> ___T=<span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin&gt;&gt;___T;</span></span><br><span class="line">    <span class="keyword">while</span>(___T--)  <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
