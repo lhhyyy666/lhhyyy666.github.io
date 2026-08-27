@@ -1,0 +1,728 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>洛谷P3177树上染色 | 梵诗的技术博客</title><meta name="author" content="梵诗"><meta name="copyright" content="梵诗"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="P3177  树上染色 - 洛谷 题意 有一棵 $n$ 个节点的树，树边有边权。你要从中选择 $m$ 个点染成黑色，其余 $n-m$ 个点染成白色。 求在所有的染色方案中，黑点两两之间的距离和 + 白点两两之间的距离和 的最大值。 思路 如果直接去算“黑点两两距离 + 白点两两距离”，由于要枚举点对，时间复杂度直接炸掉TTTLLLEEE。 用点不行，我们试试用边：考虑每一条边被经过了多少次 一、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="洛谷P3177树上染色">
+<meta property="og:url" content="https://lhhyyy666.github.io/2026/08/27/%E6%B4%9B%E8%B0%B7P3177%E6%A0%91%E4%B8%8A%E6%9F%93%E8%89%B2/index.html">
+<meta property="og:site_name" content="梵诗的技术博客">
+<meta property="og:description" content="P3177  树上染色 - 洛谷 题意 有一棵 $n$ 个节点的树，树边有边权。你要从中选择 $m$ 个点染成黑色，其余 $n-m$ 个点染成白色。 求在所有的染色方案中，黑点两两之间的距离和 + 白点两两之间的距离和 的最大值。 思路 如果直接去算“黑点两两距离 + 白点两两距离”，由于要枚举点对，时间复杂度直接炸掉TTTLLLEEE。 用点不行，我们试试用边：考虑每一条边被经过了多少次 一、">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lhhyyy666.github.io/img/me.jpg">
+<meta property="article:published_time" content="2026-08-27T07:21:00.000Z">
+<meta property="article:modified_time" content="2026-08-27T08:15:00.324Z">
+<meta property="article:author" content="梵诗">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="树形dp">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lhhyyy666.github.io/img/me.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "洛谷P3177树上染色",
+  "url": "https://lhhyyy666.github.io/2026/08/27/%E6%B4%9B%E8%B0%B7P3177%E6%A0%91%E4%B8%8A%E6%9F%93%E8%89%B2/",
+  "image": "https://lhhyyy666.github.io/img/me.jpg",
+  "datePublished": "2026-08-27T07:21:00.000Z",
+  "dateModified": "2026-08-27T08:15:00.324Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "梵诗",
+      "url": "https://lhhyyy666.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.svg"><link rel="canonical" href="https://lhhyyy666.github.io/2026/08/27/%E6%B4%9B%E8%B0%B7P3177%E6%A0%91%E4%B8%8A%E6%9F%93%E8%89%B2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'medium_zoom',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '洛谷P3177树上染色',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.1.1/index.css"><style>code, pre, kbd, samp { font-variant-ligatures: none !important; }</style><style>#page-header.full_page::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 14%; background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--global-bg) 85%, transparent)); pointer-events: none; } #page-header.full_page #scroll-down { z-index: 1; }</style><style>#page-header.full_page { background-position: center 70%; }</style><style>#footer { background-color: #f2f6fb; background-image: none !important; border-top: 1px solid rgba(73, 177, 245, 0.25); } #footer::before { background-color: transparent !important; } #footer, #footer > *, #footer a { color: #4b5563; font-weight: 400; } [data-theme="dark"] #footer { background-color: #13161b; border-top: 1px solid rgba(255, 255, 255, 0.07); } [data-theme="dark"] #footer, [data-theme="dark"] #footer > *, [data-theme="dark"] #footer a { color: #9aa4b2; font-weight: 400; } .footer-other::before { content: "✦"; display: block; text-align: center; color: #49b1f5; font-size: 1.1em; line-height: 1; margin-bottom: 14px; } .footer-other::after { content: ""; display: block; width: 160px; height: 1px; margin: 16px auto 0; background: linear-gradient(to right, transparent, rgba(73, 177, 245, 0.4), transparent); }</style><style>:root { --global-bg: #f2f6fb; } [data-theme="dark"] { --global-bg: #13161b; }</style><style>#article-container img { max-height: 72vh; width: auto; height: auto; display: block; margin: 0 auto; }</style><style>.pagination-related .cover { background: #94b3cc !important; opacity: 1 !important; } .pagination-related .info .info-1, .pagination-related .info .info-2 { color: #ffffff; } .pagination-related .info .info-1 .info-item-1 { color: #e6f3fd; } [data-theme="dark"] .pagination-related .cover { background: #34404f !important; }</style><style>#aside-content #card-toc .toc-content .toc-link.active { background: #94b3cc; color: #ffffff; } [data-theme="dark"] #aside-content #card-toc .toc-content .toc-link.active { background: #34404f; color: #ffffff; }</style><script>window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+  }
+};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/me.jpg" onerror="this.onerror=null;this.src='/img/banner-mist.jpg'" alt="avatar"/ loading='lazy'></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-box-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/banner-post.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">梵诗的技术博客</span></a><a class="nav-page-title" href="/"><span class="site-name">洛谷P3177树上染色</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-box-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">洛谷P3177树上染色</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-27T07:21:00.000Z" title="发表于 2026-08-27 15:21:00">2026-08-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-27T08:15:00.324Z" title="更新于 2026-08-27 16:15:00">2026-08-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A2%98%E8%A7%A3/">题解</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A2%98%E8%A7%A3/%E6%B4%9B%E8%B0%B7/">洛谷</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="P3177-树上染色-洛谷"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3177">P3177  树上染色 - 洛谷</a></h1>
+<h2 id="题意">题意</h2>
+<p>有一棵 $n$ 个节点的树，树边有边权。你要从中选择 $m$ 个点染成黑色，其余 $n-m$ 个点染成白色。</p>
+<p>求在所有的染色方案中，<strong>黑点两两之间的距离和 + 白点两两之间的距离和</strong> 的最大值。</p>
+<h2 id="思路">思路</h2>
+<p>如果直接去算“黑点两两距离 + 白点两两距离”，由于要枚举点对，时间复杂度直接炸掉TTTLLLEEE。</p>
+<p>用点不行，我们试试用边：<strong>考虑每一条边被经过了多少次</strong></p>
+<h3 id="一、-核心思路：算每条边的贡献">一、 核心思路：算每条边的贡献</h3>
+<p>对于树上的任意一条边 $(u, v)$（假设 $v$ 是 $u$ 的子节点），如果我们将这条边断开，树会被分成两部分：</p>
+<ol>
+<li>
+<p><strong>$v$ 的子树</strong>（假设大小为 $siz[v]$，其中有 $k$ 个黑点，则有 $siz[v] - k$ 个白点）。</p>
+</li>
+<li>
+<p><strong>树的其余部分</strong>（共有 $n - siz[v]$ 个点，其中有 $m - k$ 个黑点，其余 $(n - siz[v]) - (m - k)$ 个为白点）。</p>
+</li>
+</ol>
+<p>这条边会被哪些点对跨越并经过呢？</p>
+<ul>
+<li>
+<p><strong>黑点对</strong>：子树内的 $k$ 个黑点 $\times$ 子树外的 $(m - k)$ 个黑点。</p>
+</li>
+<li>
+<p><strong>白点对</strong>：子树内的 $(siz[v] - k)$ 个白点 $\times$ 子树外的 $(n - siz[v] - m + k)$ 个白点。</p>
+</li>
+</ul>
+<p>也就是说，只要确定了 $v$ 的子树内选了多少个黑点 $k$，这条边 $w$ 对总收益的贡献就是固定的：</p>
+<p>$$\text{贡献} = w \times \Big( k \times (m - k) + (siz[v] - k) \times (n - siz[v] - m + k) \Big)$$</p>
+<p>这样就把庞大的全局距离和，拆解成了每条边根据“子树黑点数”计算的局部贡献！</p>
+<h3 id="二、-树形-DP-状态设计与转移">二、 树形 DP 状态设计与转移</h3>
+<p>依据上面的推导，我们需要维护子树内选了多少个黑点。</p>
+<p><strong>1. 状态定义</strong></p>
+<p>定义 $f[u][j]$ 表示：在以 $u$ 为根的子树中，选择 $j$ 个点染成黑色，该子树内部的所有边所产生的最大贡献和。</p>
+<p><strong>2. 状态转移（树上背包）</strong></p>
+<p>用树形背包的套路，遍历 $u$ 的每一个子节点 $v$：</p>
+<ul>
+<li>
+<p>设当前 $u$ 已经处理过的子树大小为 $siz[u]$，$v$ 的子树大小为 $siz[v]$。</p>
+</li>
+<li>
+<p>状态转移核心思想就是：合并前 $u$ 选了 $j-k$ 个黑点，子树 $v$ 选了 $k$ 个黑点，两者合并后总共是 $j$ 个黑点。</p>
+</li>
+</ul>
+<h2 id="分块代码">分块代码</h2>
+<p>看完思路后，我们一步一步来分块拆解代码。</p>
+<h3 id="1-DFS-遍历与边权贡献计算">1. DFS 遍历与边权贡献计算</h3>
+<p>在合并子节点前，我们先递归处理子树，并计算当前边产生的跨越贡献。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> p)</span></span>&#123;</span><br><span class="line">    siz[u] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [v, w] : adj[u])&#123;</span><br><span class="line">        <span class="keyword">if</span>(v == p) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(v, u); <span class="comment">// 递归处理子树</span></span><br><span class="line">        <span class="comment">// 注意：这里提前把 siz[v] 加到了 siz[u] 里面</span></span><br><span class="line">        siz[u] += siz[v]; </span><br></pre></td></tr></table></figure>
+<h3 id="2-背包边界优化">2. 背包边界优化</h3>
+<p>j 表示合并后 u 子树的总黑点数。倒序枚举防止一个物品被多次放入（经典01背包）<br>
+k 表示从 v 子树中选出的黑点数。<br>
+下界 $max(0, j - siz[u] + siz[v])$ 是怎么来的？<br>
+此时的 $siz[u]$ 已经加上了 $siz[v]$，所以合并前 $u$ 的真实大小是 $(siz[u] - siz[v])$。我们从 $u$ 原本的状态转移来，$u$ 原本选了  $(j - k)$ 个黑点，那么必然有：$(j - k) \le siz[u] - siz[v] \implies k \ge j - siz[u] + siz[v]$<br>
+这样就防止新状态覆盖旧状态导致重复计算</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="built_in">min</span>(m, siz[u]); j &gt;= <span class="number">0</span>; --j)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k = <span class="built_in">max</span>(<span class="number">0</span>, j - siz[u] + siz[v]); k &lt;= <span class="built_in">min</span>(siz[v], j); ++k)&#123;</span><br><span class="line">                ll sum = k * (m - k) + (siz[v] - k) * (n - siz[v] - m + k);</span><br><span class="line">                <span class="comment">// 状态转移：取原最优解 vs (合并前u选j-k个) + (v选k个) + (当前边跨越贡献)</span></span><br><span class="line">                f[u][j] = <span class="built_in">max</span>(f[u][j], f[u][j - k] + f[v][k] + w * sum);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="最终代码">最终代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> maxn=<span class="number">2000</span><span class="number">+5</span>;</span><br><span class="line">ll f[maxn][maxn];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Edge</span>&#123; <span class="type">int</span> u; ll w;&#125;;</span><br><span class="line">vector&lt;Edge&gt; adj[maxn];</span><br><span class="line"><span class="type">int</span> siz[maxn];</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> p)</span></span>&#123;</span><br><span class="line">    siz[u]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> [v,w]:adj[u])&#123;</span><br><span class="line">        <span class="keyword">if</span>(v==p) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(v,u);</span><br><span class="line">        siz[u]+=siz[v];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="built_in">min</span>(m,siz[u]);j&gt;=<span class="number">0</span>;--j)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="built_in">max</span>(<span class="number">0</span>,j-siz[u]+siz[v]);k&lt;=<span class="built_in">min</span>(siz[v],j);++k)&#123;</span><br><span class="line">                ll sum=k*(m-k)+(siz[v]-k)*(n-siz[v]-m+k);</span><br><span class="line">                f[u][j]=<span class="built_in">max</span>(f[u][j],f[u][j-k]+f[v][k]+w*sum);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;++i)&#123;</span><br><span class="line">        <span class="type">int</span> u,v,w;</span><br><span class="line">        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;</span><br><span class="line">        adj[u].<span class="built_in">push_back</span>(&#123;v,w&#125;);</span><br><span class="line">        adj[v].<span class="built_in">push_back</span>(&#123;u,w&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">dfs</span>(<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    cout&lt;&lt;f[<span class="number">1</span>][m]&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="type">int</span> ___T=<span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin&gt;&gt;___T;</span></span><br><span class="line">    <span class="keyword">while</span>(___T--)  <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="关于树上背包的时间复杂度">关于树上背包的时间复杂度</h2>
+<p>很多人看到嵌套的 <code>dfs</code> 加上里面两层 <code>for</code> 循环，会直觉性地认为这三个维度的枚举会导致时间复杂度达到 $O(N \times M^2)$ 甚至是 $O(N^3)$。</p>
+<p>但实际上，只要加上了 <code>min(m, siz[u])</code> 和 <code>min(siz[v], j)</code> 这两个极其精准的上下界，整个算法的复杂度是<strong>严格的 $O(N \times M)$</strong>。</p>
+<p>每次背包的合并，本质上是把 $u$ 原先子树里的节点 和 $v$ 子树里的节点两两组合。<strong>树上的任意两个节点，只会在它们的 LCA处被合并计算一次。</strong> 因此总的操作（合并）次数等于总的节点对数。受到背包容量 $m$ 的截断限制后，最终均摊下来就是 $O(N \times M)$。对于 $N, M \le 2000$ 的数据规模，能轻松跑完。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://lhhyyy666.github.io">梵诗</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://lhhyyy666.github.io/2026/08/27/%E6%B4%9B%E8%B0%B7P3177%E6%A0%91%E4%B8%8A%E6%9F%93%E8%89%B2/">https://lhhyyy666.github.io/2026/08/27/%E6%B4%9B%E8%B0%B7P3177%E6%A0%91%E4%B8%8A%E6%9F%93%E8%89%B2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://lhhyyy666.github.io" target="_blank">梵诗的技术博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a><a class="post-meta__tags" href="/tags/C/">C++</a><a class="post-meta__tags" href="/tags/%E6%A0%91%E5%BD%A2dp/">树形dp</a></div><div class="post-share"><div class="social-share" data-image="/img/me.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/08/26/%E6%B4%9B%E8%B0%B7P5588%20%E5%B0%8F%E7%8C%AA%E4%BD%A9%E5%A5%87%E7%88%AC%E6%A0%91/" title="洛谷P5588 小猪佩奇爬树"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">洛谷P5588 小猪佩奇爬树</div></div><div class="info-2"><div class="info-item-1">P5588 小猪佩奇爬树 - 洛谷 题意 给定一棵 $n$ 个节点的树，每个节点有一种颜色，颜色编号在 $1 \sim n$ 之间。对于每一种颜色 $c$，问树上有多少条简单路径（即树上两点之间的路径）能够覆盖所有颜色为 $c$ 的节点。换句话说，对于每种颜色，我们需要统计有多少个无序点对 $(u,v)$，使得 $u$ 到 $v$ 的路径上包含了该颜色的全部节点。  思路 本题的核心是：对于每种颜色，判断其所有节点能否被同一条树上的简单路径覆盖，并统计这样的路径数量。 一个关键性质：树上的任意两点确定一条路径，而一条路径可以覆盖若干个点，当且仅当这些点在一条“链”上（即它们可以被同一条路径包含）。 因此，问题转化为：  对于颜色 $c$，判断它的所有节点是否位于同一条树上路径上，如果是，则统计有多少条路径能包含这条“最小覆盖路径”。  树上两点确定一条简单路径。对于一种颜色 $c$，设其所有节点构成的集合为 $S_c$。若存在一条路径覆盖 $S_c$ 中所有节点，则 $S_c$ 中深度最大的点一定是该路径的某个端点。以此为突破口，我们可以分类讨论。 由于 $|S_c|$ 的大小不...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/08/26/%E6%B4%9B%E8%B0%B7P5588%20%E5%B0%8F%E7%8C%AA%E4%BD%A9%E5%A5%87%E7%88%AC%E6%A0%91/" title="洛谷P5588 小猪佩奇爬树"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-26</div><div class="info-item-2">洛谷P5588 小猪佩奇爬树</div></div><div class="info-2"><div class="info-item-1">P5588 小猪佩奇爬树 - 洛谷 题意 给定一棵 $n$ 个节点的树，每个节点有一种颜色，颜色编号在 $1 \sim n$ 之间。对于每一种颜色 $c$，问树上有多少条简单路径（即树上两点之间的路径）能够覆盖所有颜色为 $c$ 的节点。换句话说，对于每种颜色，我们需要统计有多少个无序点对 $(u,v)$，使得 $u$ 到 $v$ 的路径上包含了该颜色的全部节点。  思路 本题的核心是：对于每种颜色，判断其所有节点能否被同一条树上的简单路径覆盖，并统计这样的路径数量。 一个关键性质：树上的任意两点确定一条路径，而一条路径可以覆盖若干个点，当且仅当这些点在一条“链”上（即它们可以被同一条路径包含）。 因此，问题转化为：  对于颜色 $c$，判断它的所有节点是否位于同一条树上路径上，如果是，则统计有多少条路径能包含这条“最小覆盖路径”。  树上两点确定一条简单路径。对于一种颜色 $c$，设其所有节点构成的集合为 $S_c$。若存在一条路径覆盖 $S_c$ 中所有节点，则 $S_c$ 中深度最大的点一定是该路径的某个端点。以此为突破口，我们可以分类讨论。 由于 $|S_c|$ 的大小不...</div></div></div></a><a class="pagination-related" href="/2026/05/23/ABC459/" title="ABC459"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-23</div><div class="info-item-2">ABC459</div></div><div class="info-2"><div class="info-item-1">今天只写到D题，但是我还是来写题解了~ A和B感觉没什么好写的，略了。 C 题意 给你N个格子，进行Q次操作 1.在第x个格子里面加1，如果每个格子都大于1，每个格子都需要减去1 2.查询有几个格子大于x 思路 刚开始想着直接暴力，但是一看范围，嗯100%超时 每次所有格子大于1的时候都减掉1，如果暴力遍历所有格子好麻烦，那么！我们干脆不要减了，记录下需要减的次数cnt 在查询x的时候，因为我们没有给每个格子减cnt，所以我们需要给x加上tar是我们最后得出需要查询的值$tar=cnt+x$ 解决了减掉1的麻烦，还有什么麻烦呢？有没有感觉查询大于tar如果每次都遍历一次好麻烦，那么！如何快速的找到几个格子大于tar呢？我们直接开一个数组S[i]来记录累计次数&gt;=i 的单元格数量，现在我们查询只要输出S[tar]即可 好了，问题又来了，我们如何看是否需要cnt++(所有格子减1)，其实思考完上面，这个解决非常简单，只有当所有单元格的次数都大于cnt*的时候，我们才要减掉1，我们已经记录了次数数组S，所以只要$S[cnt+1]==n$ 我们就需要cnt++ 代码 1234567...</div></div></div></a><a class="pagination-related" href="/2026/05/12/ABC457/" title="ABC457"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-12</div><div class="info-item-2">ABC457</div></div><div class="info-2"><div class="info-item-1">比赛时写到D题，比赛后补完了，记录一下第一次补完，以及第一次写题解 A 题意 给你一个序列A，和下标x, 问第x个元素是多少 思路 直接输出Ax，注意下标从1开始 代码 12345678910void solve()&#123;    int n;    cin&gt;&gt;n;    vector&lt;int&gt; a(n+1);    for(int i=1;i&lt;=n;++i) cin&gt;&gt;a[i];    int x;    cin&gt;&gt;x;    cout&lt;&lt;a[x]&lt;&lt;&#x27;\n&#x27;;&#125; B 题意 给你N个长度不一样的序列A，和下标x，y，问Ax，y是多少 思路 使用vector的动态数组，注意x和y下标都从1开始 代码 1234567891011121314151617181920void solve()&#123;    int n;    cin&gt;&gt;n;    vector&lt;int&gt; a[n+1];    for(int i=1;i&lt;=n;++i)    ...</div></div></div></a><a class="pagination-related" href="/2026/05/16/ABC458/" title="ABC458"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-16</div><div class="info-item-2">ABC458</div></div><div class="info-2"><div class="info-item-1">今天写到E题，来写个小小题解吧！ A 题意 给你一个字符串s，删除前面n个和后面n个字母，然后输出 思路 使用substr进行截取 代码 1234567891011void solve()&#123;    string s;    cin&gt;&gt;s;    int n;    cin&gt;&gt;n;    s=s.substr(n);    int len=s.size();    s=s.substr(0,len-n);    cout&lt;&lt;s&lt;&lt;&quot;\n&quot;;&#125; B 题意 给你一个二维数组，问每一个单元格的相邻的单元格数 思路 超出范围的不算，我们可以假设都为4，然后如果有在边上的就剪掉 代码 123456789101112131415161718void solve()&#123;   int n,m;   cin&gt;&gt;n&gt;&gt;m;   for(int i=1;i&lt;=n;++i)   &#123;        for(int j=1;j&lt;=m;++j)        &#123;...</div></div></div></a><a class="pagination-related" href="/2026/05/18/%E5%9B%BE%E8%AE%BA%E6%95%B4%E5%90%88/" title="图论整合"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-18</div><div class="info-item-2">图论整合</div></div><div class="info-2"><div class="info-item-1">图的储存 1.邻接矩阵 使用条件：适合点数比较少的,注意处理重边时需取 $\min$。 1234567891011121314const int MAXN = 1005; // 最大顶点数const int INF = 0x3f3f3f3f; // 无穷大int g[MAXN][MAXN]; // g[u][v] 存储 u 到 v 的边权int n, m; // n个点，m条边int main() &#123;    cin &gt;&gt; n &gt;&gt; m;    for (int i = 0; i &lt; m; i++) &#123;        int u, v, w;        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;        g[u][v]=min( g[u][v], w ); // 防止重边，取最小权	    g[v][u]=min( g[v][u], w );// 如果是无向图，加上这一行    &#125;    return 0;&#125; P2245 星际导航 - 洛谷 2.邻接表 适合大部分场景，简...</div></div></div></a><a class="pagination-related" href="/2026/08/09/%E6%B4%9B%E8%B0%B7P4551%E6%9C%80%E9%95%BF%E5%BC%82%E6%88%96%E8%B7%AF%E5%BE%84/" title="洛谷P4551 最长异或路径"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-09</div><div class="info-item-2">洛谷P4551 最长异或路径</div></div><div class="info-2"><div class="info-item-1">P4551 最长异或路径 - 洛谷 题意 给你一棵 带权树（每个边有一个权值），让你找到树上任意两个节点之间的路径，使得这条路径上所有边权的异或和（XOR）最大，并输出这个最大值。 思路 树上任意两点 u 和 v 之间路径的异或和，等于 u 到根节点的异或和 异或上 v 到根节点的异或和 Why？！  因为从根节点到 u，和从根节点到 v 的路径中，重复的部分（即从根节点到它们最近公共祖先 LCA 的那一段）会被异或两次。而根据异或的性质 a ^ a = 0，这一段就抵消掉了，剩下的正好是 u 到 v 的唯一路径。   操作：任选一个根（比如节点 1），跑一遍 DFS，计算出每个节点到根的异或值，存入数组 dis 中。   结果：问题成功从“树上找两条路径”降维成了“在数组 dis 中找两个数，使它们的异或值最大”。   转化后的经典问题（最大异或对）P10471 最大异或对 The XOR Largest Pair - 洛谷 现在你手里有一个数组 dis，里面全是整数。你需要找出 dis[i] ^ dis[j] 的最大值。 如果暴力枚举所有数对（O(n^2)），对于 n=100...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/me.jpg" onerror="this.onerror=null;this.src='/img/banner-mist.jpg'" alt="avatar"/ loading='lazy'></div><div class="author-info-name">梵诗</div><div class="author-info-description">海压竹枝低复举，风吹山角晦还明</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lhhyyy666"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/lhhyyy666" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，一起交流算法与编程！🎉</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#P3177-%E6%A0%91%E4%B8%8A%E6%9F%93%E8%89%B2-%E6%B4%9B%E8%B0%B7"><span class="toc-number">1.</span> <span class="toc-text">P3177  树上染色 - 洛谷</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E6%84%8F"><span class="toc-number">1.1.</span> <span class="toc-text">题意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.2.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF%EF%BC%9A%E7%AE%97%E6%AF%8F%E6%9D%A1%E8%BE%B9%E7%9A%84%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">一、 核心思路：算每条边的贡献</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E6%A0%91%E5%BD%A2-DP-%E7%8A%B6%E6%80%81%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%BD%AC%E7%A7%BB"><span class="toc-number">1.2.2.</span> <span class="toc-text">二、 树形 DP 状态设计与转移</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%9D%97%E4%BB%A3%E7%A0%81"><span class="toc-number">1.3.</span> <span class="toc-text">分块代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-DFS-%E9%81%8D%E5%8E%86%E4%B8%8E%E8%BE%B9%E6%9D%83%E8%B4%A1%E7%8C%AE%E8%AE%A1%E7%AE%97"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. DFS 遍历与边权贡献计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%83%8C%E5%8C%85%E8%BE%B9%E7%95%8C%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. 背包边界优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E4%BB%A3%E7%A0%81"><span class="toc-number">1.4.</span> <span class="toc-text">最终代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%91%E4%B8%8A%E8%83%8C%E5%8C%85%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.5.</span> <span class="toc-text">关于树上背包的时间复杂度</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/27/%E6%B4%9B%E8%B0%B7P3177%E6%A0%91%E4%B8%8A%E6%9F%93%E8%89%B2/" title="洛谷P3177树上染色">洛谷P3177树上染色</a><time datetime="2026-08-27T07:21:00.000Z" title="发表于 2026-08-27 15:21:00">2026-08-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/26/%E6%B4%9B%E8%B0%B7P5588%20%E5%B0%8F%E7%8C%AA%E4%BD%A9%E5%A5%87%E7%88%AC%E6%A0%91/" title="洛谷P5588 小猪佩奇爬树">洛谷P5588 小猪佩奇爬树</a><time datetime="2026-08-26T04:37:00.000Z" title="发表于 2026-08-26 12:37:00">2026-08-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/24/%E5%A4%A7%E4%B8%80%E5%9B%9E%E9%A1%BE/" title="大一回顾">大一回顾</a><time datetime="2026-08-24T07:22:00.000Z" title="发表于 2026-08-24 15:22:00">2026-08-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/24/%E6%B4%9B%E8%B0%B7P3976%E6%97%85%E6%B8%B8/" title="洛谷P3976 旅游">洛谷P3976 旅游</a><time datetime="2026-08-24T05:25:00.000Z" title="发表于 2026-08-24 13:25:00">2026-08-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/09/%E6%B4%9B%E8%B0%B7P4551%E6%9C%80%E9%95%BF%E5%BC%82%E6%88%96%E8%B7%AF%E5%BE%84/" title="洛谷P4551 最长异或路径">洛谷P4551 最长异或路径</a><time datetime="2026-08-09T15:45:00.000Z" title="发表于 2026-08-09 23:45:00">2026-08-09</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 梵诗</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5-b1</a></span></div><div class="footer_custom_text">本站内容采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5-b1"></script><script src="/js/main.js?v=5.5.5-b1"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'lhhyyy666/lhhyyy666.github.io',
+      'data-repo-id': 'R_kgDOSbKD3A',
+      'data-category-id': 'DIC_kwDOSbKD3M4DEFHl',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script src="/js/click-stars.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:description\"]","link[rel=\"canonical\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章…" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.5-b1"></script></div></div></body></html>
